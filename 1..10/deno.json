@@ -1,0 +1,9 @@
+{
+  "tasks": {
+    "dev": "deno run --watch --allow-env --allow-read --allow-net --allow-run"
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1",
+    "graphql-request": "npm:graphql-request@^7.1.2"
+  }
+}
