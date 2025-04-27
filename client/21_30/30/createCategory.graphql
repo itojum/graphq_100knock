@@ -1,0 +1,8 @@
+mutation ExampleMutation(
+  $categoryName: String!
+  ) {
+  newCategory: createCategory(name: $categoryName) {
+    id
+    name
+  }
+}

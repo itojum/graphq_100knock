@@ -1,0 +1,12 @@
+mutation ExampleMutation(
+  $productName: String!,
+  $description: String!,
+  $price: Float!,
+  $categoryId: ID!
+  ) {
+  newProduct: createProduct(name: $productName, description: $description, price: $price, categoryId: $categoryId) {
+    id
+    name
+    price
+  }
+}
