@@ -18,3 +18,25 @@
 はい、続けます！
 
 
+## #22: 商品を新規登録せよ
+
+### お題
+新しい商品（Product）を登録するMutationを書いてください。
+
+### 要件
+- `createProduct` Mutationを使う
+- 引数に必要なのは
+  - `name: String!`
+  - `description: String!`
+  - `price: Float!`
+  - `categoryId: ID!`
+- 返すフィールドは
+  - `id`
+  - `name`
+  - `price`
+- 変数 `$name`, `$description`, `$price`, `$categoryId` を使用する
+
+### ヒント
+- Mutationは通常のQueryと似ているが、先頭を`mutation`にする。
+- 変数を定義して、それを引数として渡す。
+- 必要最低限のフィールドだけ返すのが基本スタイル。
