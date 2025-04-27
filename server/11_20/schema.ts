@@ -1,4 +1,4 @@
-import { createPost, createUser, getPostById, getUserById, posts, postsByAuthor, users } from "./data.ts";
+import { createPost, createUser, getPostById, getPosts, getUserById, getUsers, postsByAuthor } from "./data.ts";
 
 const typeDefs = `#graphql
   type User {
@@ -40,7 +40,7 @@ const resolvers = {
     },
     users: () => {
       
-      return users;
+      return getUsers();
     },
     post: (_parent: any, arg: argType) => { 
 
@@ -48,7 +48,7 @@ const resolvers = {
     },
     posts: () => {
       
-      return posts;
+      return getPosts();
     },
     postsByAuthor: (_parent: any, arg: argType) => {
       

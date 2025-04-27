@@ -196,6 +196,13 @@ const addAuthor = (post: Post) => {
   }
 }
 
+export const getUsers = () => {
+  return users
+}
+export const getPosts = () => {
+  return posts.map(addAuthor)
+}
+
 export const getUserById = (id: string) => {
   return users.find((user) => user.id === id);
 }
