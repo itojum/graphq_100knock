@@ -1,0 +1,12 @@
+query ExampleQuery {
+  users {
+    id
+    name
+    email
+    posts {
+      id
+      title
+      content
+    }
+  }
+}
