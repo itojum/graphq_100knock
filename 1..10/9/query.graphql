@@ -1,0 +1,10 @@
+query ExampleQuery($id1: ID!, $id2: ID!) {
+  user1: user(id: $id1) {
+    id
+    name
+  }
+  user2: user(id: $id2) {
+    id
+    name
+  }
+}
