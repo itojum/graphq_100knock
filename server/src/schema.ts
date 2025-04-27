@@ -5,6 +5,12 @@ const typeDefs = `#graphql
     id: ID!
     name: String!
     email: String!
+    company: Company
+  }
+  
+  type Company {
+    id: ID!
+    name: String!
   }
 
   type Query {

@@ -1,0 +1,11 @@
+query ExampleQuery {
+  users {
+    id
+    name
+    email
+    company {
+      id
+      name
+    }
+  }
+}
