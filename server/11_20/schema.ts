@@ -1,4 +1,5 @@
-import { createPost, createUser, getPostById, getPosts, getUserById, getUsers, postsByAuthor } from "./data.ts";
+import { createPost, createUser, getPostById, getUserById, posts, postsByAuthor, users } from "./data.ts";
+import { Post, User } from "./types.ts";
 
 const typeDefs = `#graphql
   type User {
@@ -39,18 +40,12 @@ const resolvers = {
     user: (_parent: any, arg: argType) => {
       return getUserById(arg.id);
     },
-    users: () => {
-      
-      return getUsers();
-    },
+    users: () => users,
     post: (_parent: any, arg: argType) => { 
 
       return getPostById(arg.id);
     },
-    posts: () => {
-      
-      return getPosts();
-    },
+    posts: () => posts,
     postsByAuthor: (_parent: any, arg: argType) => {
       
       return postsByAuthor(arg.authorId);
@@ -66,7 +61,17 @@ const resolvers = {
       const { title, content, authorId } = arg;
       return createPost(title, content, authorId);
     }
-  }
+  },
+  User: {
+    posts: (user: User) => {
+      return posts.filter(post => post.authorId === user.id);
+    }
+  },
+  Post: {
+    author: (post: Post) => {
+      return users.find(user => user.id === post.authorId);
+    },
+  },
 };
 
 export { typeDefs, resolvers };

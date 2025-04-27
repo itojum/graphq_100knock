@@ -1,15 +1,5 @@
-type User = {
-  id: string;
-  name: string;
-  email: string;
-}
+import { Post, User } from "./types.ts";
 
-type Post = {
-  id: string,
-  title: string,
-  content: string,
-  authorId: string
-};
 
 export const users: User[] = [
   {
@@ -187,41 +177,19 @@ export const posts: Post[] = [
   }
 ]
 
-// Postを渡すとauthorを付加して返す
-const addAuthor = (post: Post) => {
-  const author = users.find((user) => user.id === post.authorId);
-  return {
-    ...post,
-    author
-  }
-}
-const addPosts = (user: User) => {
-  const userPosts = posts.filter((post) => post.authorId === user.id);
-  return {
-    ...user,
-    posts: userPosts.map(addAuthor)
-  }
-}
-
-export const getUsers = () => {
-  return users.map(addPosts);
-}
-export const getPosts = () => {
-  return posts.map(addAuthor)
-}
 
 export const getUserById = (id: string) => {
-  const user = users.find((user) => user.id === id);
-  return user ? addPosts(user) : null;
+
+  return users.find((user) => user.id === id);
 }
 
 export const getPostById = (id: string) => {
-  const post = posts.find((post) => post.id === id);
-  return post ? addAuthor(post) : null;
+  return posts.find((post) => post.id === id);
 }
 
 export const postsByAuthor = (authorId: string) => {
-  return posts.filter((post) => post.authorId === authorId).map(addAuthor);
+
+  return posts.filter((post) => post.authorId === authorId);
 }
 
 export const createUser = (name: string, email: string) => {
