@@ -1,0 +1,17 @@
+query ExampleQuery($postId: ID!) {
+  post(id: $postId) {
+    id
+    title
+    content
+    author {
+      id
+      name
+      email
+      posts {
+        id
+        title
+        content
+      }
+    }
+  }
+}
