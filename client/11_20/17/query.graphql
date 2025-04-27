@@ -1,0 +1,9 @@
+query ExampleQuery {
+  posts {
+    id
+    title
+    author {
+      name
+    }
+  }
+}
