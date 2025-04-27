@@ -1,4 +1,4 @@
-import { createUser, deleteUser, getUserById, getUsersByCompanyId, updateUserName, users } from "./data/users.ts";
+import { createUser, deleteUser, getUserById, getUsersByCompanyId, updateUserName, users } from "./data.ts";
 
 const typeDefs = `#graphql
   type User {
