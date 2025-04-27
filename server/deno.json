@@ -1,0 +1,9 @@
+{
+  "tasks": {
+    "dev": "deno run --watch --allow-env --allow-read --allow-net --allow-run main.ts"
+  },
+  "imports": {
+    "apollo-server": "npm:apollo-server@^3.13.0"
+  },
+  "nodeModulesDir": "auto"
+}
