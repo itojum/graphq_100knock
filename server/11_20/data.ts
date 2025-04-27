@@ -212,3 +212,12 @@ export const createPost = (title: string, content: string, authorId: string) => 
   posts.push(newPost);
   return newPost;
 }
+
+export const updatePost = (id: string, title: string, content: string) => {
+  const post = posts.find((post) => post.id === id);
+  if (post) {
+    post.title = title;
+    post.content = content;
+  }
+  return post;
+}

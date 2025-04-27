@@ -1,4 +1,4 @@
-import { createPost, createUser, getPostById, getUserById, posts, postsByAuthor, users } from "./data.ts";
+import { createPost, createUser, getPostById, getUserById, posts, postsByAuthor, updatePost, users } from "./data.ts";
 import { Post, User } from "./types.ts";
 
 const typeDefs = `#graphql
@@ -27,6 +27,7 @@ const typeDefs = `#graphql
   type Mutation {
     createUser(name: String!, email: String!): User!
     createPost(title: String!, content: String!, authorId: ID!): Post!
+    updatePost(id: ID!, title: String!, content: String!): Post!
   }
 `;
 
@@ -60,6 +61,11 @@ const resolvers = {
     createPost: (_parent: any, arg: argType) => {
       const { title, content, authorId } = arg;
       return createPost(title, content, authorId);
+    },
+    updatePost: (_parent: any, arg: argType) => {
+      const { id, title, content } = arg;
+      console.log(id, title, content);
+      return updatePost(id, title, content);
     }
   },
   User: {

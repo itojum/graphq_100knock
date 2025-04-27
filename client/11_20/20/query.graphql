@@ -1,0 +1,7 @@
+mutation ExampleMutation($id: ID!, $title: String!, $content: String!) {
+  updatePost(id: $id, title: $title, content: $content) {
+    id
+    title
+    content
+  }
+}
