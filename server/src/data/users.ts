@@ -154,3 +154,13 @@ export const updateUserName = (id: string, name: string) => {
   user.name = name;
   return user;
 }
+
+export const deleteUser = (id: string) => {
+  const userIndex = users.findIndex(user => user.id === id);
+  if (userIndex === -1) {
+    throw new Error(`User with ID ${id} not found`);
+  }
+  
+  users.splice(userIndex, 1)[0];
+  return true;
+}

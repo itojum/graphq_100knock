@@ -161,3 +161,29 @@ type Mutation {
 
 ### ヒント：
 Mutationでは更新内容をリクエスト内で柔軟に指定できるよ！
+
+## #7: Mutationでデータを削除しよう
+
+### お題：
+以下のスキーマを前提に、特定のユーザーを削除するMutationを書いてください。
+
+```graphql
+type User {
+  id: ID!
+  name: String!
+  email: String!
+}
+
+type Mutation {
+  deleteUser(id: ID!): Boolean!
+}
+```
+### 要件：
+- deleteUserミューテーションを使って、特定のidのユーザーを削除
+- 削除できたらtrueが返る想定
+
+- 変数（$id）を使ったクエリにする
+
+### ヒント：
+返り値がBoolean!だから、trueかfalseだけ返るよ！
+
