@@ -52,16 +52,16 @@ type Mutation {
 }
 ```
 #### 出題内容
-1.	特定のユーザーをid指定で取得するクエリ
-2.	全ユーザーを一覧取得するクエリ
-3.	特定の会社に所属するユーザー一覧を取得するクエリ
-4.	Mutationで新しいユーザーを作成する
-5.	Mutationで既存ユーザーの名前を更新する
-6.	Mutationで既存ユーザーを削除する
-7.	エイリアスを使って複数のユーザーを同時に取得する
-8.	エイリアスを使って取得したフィールド名を変更する
-9.	エイリアスを使って異なるユーザーを同時に取得する
-10.	usersByCompanyで取得したユーザーと、その所属会社名をネストして取得するクエリ
+1. 特定ユーザー取得 - `user(id: ID!)`で特定のユーザーを取得する
+2. 全ユーザー一覧取得 - `users`クエリで全ユーザーを一覧表示する
+3. 会社別ユーザー一覧取得 - `usersByCompany`で特定会社の所属ユーザー一覧を取得する
+4. ユーザー新規作成 - `createUser` Mutationで新規ユーザーを作成する
+5. ユーザー名更新 - `updateUserName` Mutationで既存ユーザーの名前を更新する
+6. ユーザー削除 - `deleteUser` Mutationでユーザーを削除する
+7. 複数ユーザー同時取得 - エイリアスを使用して複数ユーザーを一度に取得する
+8. フィールド名変更 - エイリアスでフィールド名を変更して取得する
+9. 異なるユーザー同時取得 - エイリアスで複数の異なるユーザーを同時に取得する
+10. ネスト情報取得 - `usersByCompany`でユーザーと所属会社情報をネストして取得する
 
 ### 11〜20本目
 #### 使用スキーマ
@@ -105,3 +105,48 @@ type Mutation {
 18. 特定ユーザーの投稿件数を取得せよ - `user(id)→posts`取得、件数カウント（クライアント側）
 19. すべての投稿タイトルを昇順取得せよ - `posts`クエリ、クライアント側でソート
 20. 特定投稿のタイトルと本文を更新せよ - `updatePost` Mutationで更新
+
+### 21〜30本目
+#### 使用スキーマ
+```graphql
+type Category {
+  id: ID!
+  name: String!
+  products: [Product!]!
+}
+
+type Product {
+  id: ID!
+  name: String!
+  description: String!
+  price: Float!
+  category: Category!
+}
+
+type Query {
+  category(id: ID!): Category
+  categories: [Category!]!
+  product(id: ID!): Product
+  products: [Product!]!
+  productsByCategory(categoryId: ID!): [Product!]!
+}
+
+type Mutation {
+  createCategory(name: String!): Category!
+  createProduct(name: String!, description: String!, price: Float!, categoryId: ID!): Product!
+  updateProduct(id: ID!, name: String, description: String, price: Float): Product!
+}
+
+```
+
+#### 出題内容
+21. カテゴリの作成 - `createCategory` Mutationを使ってカテゴリを作成する
+22. 商品の作成 - `createProduct` Mutationで商品を作成する（カテゴリと紐づける）
+23. 商品一覧取得 - `products`クエリで全商品を取得する
+24. カテゴリ別商品取得 - `productsByCategory`クエリでカテゴリごとの商品を取得する
+25. 商品詳細取得 - `product(id: ID!)`で特定の商品を取得する
+26. 商品更新 - `updateProduct` Mutationで商品の情報を更新する
+27. カテゴリ詳細と商品一覧取得 - `category(id)`でカテゴリ情報＋紐づく商品一覧を取得する
+28. 商品詳細とカテゴリ情報取得 - `product(id)`で商品情報＋そのカテゴリ情報を取得する
+29. 連続Mutation実行 - `createCategory`と`createProduct`を連続で実行するシナリオ
+30. 連続作成のエラー対応 - `createCategory`→`createProduct`連携で発生するエラーを修正する
