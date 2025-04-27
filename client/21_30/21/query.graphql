@@ -1,0 +1,9 @@
+query ExampleQuery($categoryId: ID!) {
+  category(id: $categoryId) {
+    products {
+      id
+      name
+      price
+    }
+  }
+}
