@@ -11,7 +11,7 @@ const typeDefs = `#graphql
     id: ID!
     title: String!
     content: String!
-    authorId: ID!
+    author: User!
   }
 
   type Query {

@@ -1,4 +1,17 @@
-export const users = [
+type User = {
+  id: string;
+  name: string;
+  email: string;
+}
+
+type Post = {
+  id: string,
+  title: string,
+  content: string,
+  authorId: string
+};
+
+export const users: User[] = [
   {
     id: '1',
     name: '山田太郎',
@@ -51,7 +64,7 @@ export const users = [
   }
 ]
 
-export const posts = [
+export const posts: Post[] = [
   {
     id: '1',
     title: '2025年の新しい技術トレンド',
@@ -174,16 +187,26 @@ export const posts = [
   }
 ]
 
+// Postを渡すとauthorを付加して返す
+const addAuthor = (post: Post) => {
+  const author = users.find((user) => user.id === post.authorId);
+  return {
+    ...post,
+    author
+  }
+}
+
 export const getUserById = (id: string) => {
   return users.find((user) => user.id === id);
 }
 
 export const getPostById = (id: string) => {
-  return posts.find((post) => post.id === id);
+  const post = posts.find((post) => post.id === id);
+  return post ? addAuthor(post) : null;
 }
 
 export const postsByAuthor = (authorId: string) => {
-  return posts.filter((post) => post.authorId === authorId);
+  return posts.filter((post) => post.authorId === authorId).map(addAuthor);
 }
 
 export const createUser = (name: string, email: string) => {
