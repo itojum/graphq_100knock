@@ -1,0 +1,7 @@
+query ExampleQuery($userId: ID!) {
+  user(id: $userId) {
+    id
+    userName: name
+    email
+  }
+}
