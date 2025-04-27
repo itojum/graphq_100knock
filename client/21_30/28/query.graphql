@@ -1,0 +1,11 @@
+query ExampleQuery($productId: ID!) {
+  product(id: $productId) {
+    id
+    name
+    price
+    category {
+      id
+      name
+    }
+  }
+}
