@@ -195,16 +195,24 @@ const addAuthor = (post: Post) => {
     author
   }
 }
+const addPosts = (user: User) => {
+  const userPosts = posts.filter((post) => post.authorId === user.id);
+  return {
+    ...user,
+    posts: userPosts.map(addAuthor)
+  }
+}
 
 export const getUsers = () => {
-  return users
+  return users.map(addPosts);
 }
 export const getPosts = () => {
   return posts.map(addAuthor)
 }
 
 export const getUserById = (id: string) => {
-  return users.find((user) => user.id === id);
+  const user = users.find((user) => user.id === id);
+  return user ? addPosts(user) : null;
 }
 
 export const getPostById = (id: string) => {
