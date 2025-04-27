@@ -1,0 +1,6 @@
+query ExampleQuery {
+  posts {
+    id
+    title
+  }
+}
