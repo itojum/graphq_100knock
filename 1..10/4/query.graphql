@@ -1,0 +1,6 @@
+query ExampleQuery($companyId: ID!) {
+  usersByCompany(companyId: $companyId) {
+    id
+    name
+  }
+}

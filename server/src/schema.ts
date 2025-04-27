@@ -1,4 +1,4 @@
-import { getUserById, users } from "./data/users.ts";
+import { getUserById, getUsersByCompanyId, users } from "./data/users.ts";
 
 const typeDefs = `#graphql
   type User {
@@ -16,6 +16,7 @@ const typeDefs = `#graphql
   type Query {
     user(id: ID!): User
     users: [User!]
+    usersByCompany(companyId: ID!): [User!]!
   }
 `;
 
@@ -32,6 +33,10 @@ const resolvers = {
     },
     users: () => {
       return users
+    },
+    // deno-lint-ignore no-explicit-any
+    usersByCompany: (_parent: any, arg: argType) => {
+      return getUsersByCompanyId(arg.companyId)
     }
   },
 };
