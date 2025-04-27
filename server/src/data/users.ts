@@ -144,3 +144,13 @@ export const createUser = (name: string, email: string, companyId: string) => {
   users.push(newUser);
   return newUser;
 }
+
+export const updateUserName = (id: string, name: string) => {
+  const user = getUserById(id);
+  if (!user) {
+    throw new Error(`User with ID ${id} not found`);
+  }
+  
+  user.name = name;
+  return user;
+}

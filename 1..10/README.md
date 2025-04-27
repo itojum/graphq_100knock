@@ -136,3 +136,28 @@ type Mutation {
 
 ### ヒント：
 Mutationはmutationキーワードから始まるよ！Queryとは違うので注意！
+
+## #6: Mutationでデータを更新しよう
+
+### お題：
+以下のスキーマを前提に、既存のユーザーの名前を更新するMutationを書いてください。
+
+```graphql
+type User {
+  id: ID!
+  name: String!
+  email: String!
+}
+
+type Mutation {
+  updateUserName(id: ID!, name: String!): User!
+}
+```
+### 要件：
+- updateUserNameミューテーションを使って、特定のユーザーのnameを更新
+- 更新後に、返ってきたユーザーのidと新しいnameを取得
+
+- 変数（$id、$name）を使ったクエリにする
+
+### ヒント：
+Mutationでは更新内容をリクエスト内で柔軟に指定できるよ！

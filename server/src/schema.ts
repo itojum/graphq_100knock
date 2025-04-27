@@ -1,4 +1,4 @@
-import { createUser, getUserById, getUsersByCompanyId, users } from "./data/users.ts";
+import { createUser, getUserById, getUsersByCompanyId, updateUserName, users } from "./data/users.ts";
 
 const typeDefs = `#graphql
   type User {
@@ -21,6 +21,7 @@ const typeDefs = `#graphql
 
   type Mutation {
     createUser(name: String!, email: String!, companyId: ID!): User!
+    updateUserName(id: ID!, name: String!): User!
   }
 `;
 
@@ -46,6 +47,10 @@ const resolvers = {
       console.log(arg);
       const { name, email, companyId } = arg;
       return createUser(name, email, companyId);
+    },
+    updateUserName: (_parent: any, arg: argType) => {
+      const { id, name } = arg;
+      return updateUserName(id, name);
     }
   }
 };
