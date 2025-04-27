@@ -1,0 +1,7 @@
+mutation ExampleMutation($productId: ID!, $price: Float!) {
+  updateProduct(id: $productId, price: $price) {
+    id
+    name
+    price
+  }
+}
