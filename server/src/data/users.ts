@@ -127,3 +127,20 @@ export const getUserById = (id: string) => {
 export const getUsersByCompanyId = (companyId: string) => {
   return users.filter(user => user.company.id === companyId);
 }
+
+export const createUser = (name: string, email: string, companyId: string) => {
+  const company = users.find(user => user.company.id === companyId)?.company;
+  if (!company) {
+    throw new Error(`Company with ID ${companyId} not found`);
+  }
+  
+  const newUser = {
+    id: (users.length + 1).toString(),
+    name,
+    email,
+    company
+  };
+
+  users.push(newUser);
+  return newUser;
+}

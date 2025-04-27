@@ -1,0 +1,11 @@
+mutation Mutation($name: String!, $email: String!, $companyId: ID!) {
+  createUser(name: $name, email: $email, companyId: $companyId) {
+    id
+    name
+    email
+    company {
+      id
+      name
+    }
+  }
+}

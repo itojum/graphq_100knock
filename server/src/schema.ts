@@ -1,4 +1,4 @@
-import { getUserById, getUsersByCompanyId, users } from "./data/users.ts";
+import { createUser, getUserById, getUsersByCompanyId, users } from "./data/users.ts";
 
 const typeDefs = `#graphql
   type User {
@@ -18,6 +18,10 @@ const typeDefs = `#graphql
     users: [User!]
     usersByCompany(companyId: ID!): [User!]!
   }
+
+  type Mutation {
+    createUser(name: String!, email: String!, companyId: ID!): User!
+  }
 `;
 
 type argType = {
@@ -27,18 +31,23 @@ type argType = {
 
 const resolvers = {
   Query: {
-    // deno-lint-ignore no-explicit-any
     user: (_parent: any, arg: argType) => {
       return getUserById(arg.id)
     },
     users: () => {
       return users
     },
-    // deno-lint-ignore no-explicit-any
     usersByCompany: (_parent: any, arg: argType) => {
       return getUsersByCompanyId(arg.companyId)
     }
   },
+  Mutation: {
+    createUser: (_parent: any, arg: argType) => {
+      console.log(arg);
+      const { name, email, companyId } = arg;
+      return createUser(name, email, companyId);
+    }
+  }
 };
 
 export { typeDefs, resolvers };
