@@ -32,11 +32,17 @@ export const typeDefs = `#graphql
     reviews: [Review!]!
     favorites: [Product!]!
     favoriteProductCount: Int!
+    followers: [User!]!
   }
 
   type Favorite {
     user: User!
     product: Product!
+  }
+
+  type Follow {
+    user: User!
+    following: [User!]!
   }
 
   input ProductFilterInput {
@@ -69,5 +75,7 @@ export const typeDefs = `#graphql
     createReview(content: String!, rating: Int!, productId: ID!, userId: ID!): Review!
     addFavorite(userId: ID!, productId: ID!): Favorite!
     removeFavorite(userId: ID!, productId: ID!): Boolean!
+    followUser(userId: ID!, followingId: ID!): Follow!
+    unfollowUser(userId: ID!, followingId: ID!): Boolean!
   }
 `;

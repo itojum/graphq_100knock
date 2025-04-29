@@ -1,0 +1,10 @@
+mutation ExampleMutation($userId: ID!, $followingId: ID!) {
+  followUser(userId: $userId, followingId: $followingId) {
+    user {
+      name
+    }
+    following {
+      name
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import { GraphQLError } from "graphql";
-import { categories, favorites, products, reviews } from "../models/data.ts";
+import { categories, favorites, follows, products, reviews } from "../models/data.ts";
 import { argType, FavoriteType } from "../models/types.ts";
 import { validateReview } from "../utils/validates/review.ts";
 
@@ -88,6 +88,13 @@ export const Mutation = {
     return newReview;
   },
 
+  /**
+     
+    * @description 商品をお気に入りに追加する
+    * @param {string} arg.userId ユーザーID
+    * @param {string} arg.productId 商品ID
+    * @returns {Favorite} 作成したお気に入り
+    * */
   addFavorite: (_parent: any, arg: argType) => {
     const { userId, productId } = arg;
 
@@ -104,6 +111,10 @@ export const Mutation = {
     return newFavorite;
   },
 
+  /**
+   * @description 商品のお気に入りを削除する
+   * @returns {boolean} 削除成功フラグ
+   **/
   removeFavorite: (_parent: any, arg: argType) => {
     const { userId, productId } = arg;
 
@@ -113,6 +124,51 @@ export const Mutation = {
     }
 
     favorites.splice(favoriteIndex, 1);
+    return true;
+  },
+
+  /**
+   * @description ユーザーをフォローする
+   * @param {string} arg.userId フォローユーザーID
+   * @param {string} arg.followingId フォロイングユーザーID
+   * @returns {Follow} 作成したフォロー
+   */
+  followUser: (_parent: any, arg: argType) => {
+    const { userId, followingId } = arg;
+
+    const newFollow = {
+      id: crypto.randomUUID(),
+      userId,
+      followingId
+    };
+
+    if(userId === followingId) {
+      throw new GraphQLError("自分自身をフォローすることはできません。");
+    }
+
+    if (follows.find(follows => follows.userId === userId && follows.followingId === followingId)) {
+      throw new GraphQLError("このユーザーは既にフォローされています。");
+    }
+
+    follows.push(newFollow);
+    return newFollow;
+  },
+
+  /**
+   * @description フォローを解除する
+   * @param {string} arg.userId フォローユーザーID
+   * @param {string} arg.followingId フォロイングユーザーID
+   * @returns {boolean} 削除成功フラグ
+  **/
+  unfollowUser: (_parent: any, arg: argType) => {
+    const { userId, followingId } = arg;
+
+    const followIndex = follows.findIndex(follow => follow.userId === userId && follow.followingId === followingId);
+    if (followIndex === -1) {
+      throw new GraphQLError("このユーザーはフォローされていません。");
+    }
+
+    follows.splice(followIndex, 1);
     return true;
   }
 }

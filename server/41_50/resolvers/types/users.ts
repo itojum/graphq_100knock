@@ -1,5 +1,5 @@
-import { favorites, products, reviews } from "../../models/data.ts";
-import { ReviewType, UserType } from '../../models/types.ts';
+import { favorites, follows, products, reviews, users } from "../../models/data.ts";
+import { UserType } from '../../models/types.ts';
 
 export const User = {
   /**
@@ -32,5 +32,19 @@ export const User = {
    * */
   favoriteProductCount: (user: UserType) => {
     return favorites.filter(favorite => favorite.userId === user.id).length;
+  },
+
+
+  /**
+   * @description フォローしているユーザーを取得する
+   * @param {User} user ユーザー
+   */
+  followers: (user: UserType) => {
+    const userFollowers = follows.filter(follow => follow.userId === user.id);
+    if (userFollowers.length === 0) return [];
+
+    return users.filter(user =>
+      userFollowers.find(follow => follow.followingId === user.id)
+    );
   }
 }

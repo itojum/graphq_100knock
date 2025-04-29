@@ -30,6 +30,12 @@ export type FavoriteType = {
   productId: string
 }
 
+export type FollowType = {
+  id: string 
+  userId: string
+  followingId: string
+}
+
 export type argType = {
   [key: string]: any
 }
