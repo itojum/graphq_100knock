@@ -27,5 +27,14 @@ export const Product = {
     if (!sortBy) return filteredReviews;
     
     return sortByRating(filteredReviews, sortBy);
-  }
+  },
+
+  /**
+   * @description 商品のレビュー数を取得する
+   * @param {Product} product 商品
+   * @returns {number} レビュー数
+  */
+  reviewCount: (product: ProductType) => {
+    return reviews.filter(review => review.productId === product.id).length;
+  },
 }
