@@ -1,0 +1,11 @@
+mutation ExampleMutation($content: String!, $rating: Int!, $productId: ID!) {
+  newReview: createReview(content: $content, rating: $rating, productId: $productId) {
+    id
+    content
+    rating
+    product {
+      id
+      name
+    }
+  }
+}
