@@ -25,6 +25,11 @@ export type UserType = {
   email: string
 }
 
+export type FavoriteType = {
+  userId: string
+  productId: string
+}
+
 export type argType = {
   [key: string]: any
 }

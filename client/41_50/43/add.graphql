@@ -1,0 +1,12 @@
+mutation ExampleMutation($productId: ID!, $userId: ID!) {
+  addFavorite(productId: $productId, userId: $userId) {
+    user {
+      id
+      name
+    }
+    product {
+      id
+      name
+    }
+  }
+}

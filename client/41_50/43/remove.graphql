@@ -1,0 +1,3 @@
+mutation ExampleMutation($productId: ID!, $userId: ID!) {
+  removeFavorite(productId: $productId, userId: $userId) 
+}

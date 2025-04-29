@@ -14,6 +14,7 @@ export const typeDefs = `#graphql
     reviews(filter: ReviewFilterInput, sortBy: ReviewsSortBy): [Review!]!
     reviewCount: Int!
     averageRating: Float
+    favoritedBy: [User!]!
   }
 
   type Review {
@@ -29,6 +30,12 @@ export const typeDefs = `#graphql
     name: String!
     email: String!
     reviews: [Review!]!
+    favorites: [Product!]!
+  }
+
+  type Favorite {
+    user: User!
+    product: Product!
   }
 
   input ProductFilterInput {
@@ -59,5 +66,7 @@ export const typeDefs = `#graphql
     createProduct(name: String!, description: String!, price: Float!, categoryId: ID!): Product!
     updateProduct(id: ID!, name: String, description: String, price: Float): Product!
     createReview(content: String!, rating: Int!, productId: ID!, userId: ID!): Review!
+    addFavorite(userId: ID!, productId: ID!): Favorite!
+    removeFavorite(userId: ID!, productId: ID!): Boolean!
   }
 `;

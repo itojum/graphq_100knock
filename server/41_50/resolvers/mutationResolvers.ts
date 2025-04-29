@@ -1,6 +1,6 @@
 import { GraphQLError } from "graphql";
-import { categories, products, reviews } from "../models/data.ts";
-import { argType } from "../models/types.ts";
+import { categories, favorites, products, reviews } from "../models/data.ts";
+import { argType, FavoriteType } from "../models/types.ts";
 import { validateReview } from "../utils/validates/review.ts";
 
 export const Mutation = {
@@ -83,8 +83,36 @@ export const Mutation = {
     if(reviews.find(review => review.userId === userId && review.productId === productId)) {
       throw new GraphQLError("この商品に対するレビューは既に存在します。");
     }
-    
+
     reviews.push(newReview);
     return newReview;
+  },
+
+  addFavorite: (_parent: any, arg: argType) => {
+    const { userId, productId } = arg;
+
+    const newFavorite: FavoriteType = {
+      userId,
+      productId
+    };
+
+    if (favorites.find(favorite => favorite.userId === userId && favorite.productId === productId)) {
+      throw new GraphQLError("この商品は既にお気に入りに追加されています。");
+    }
+
+    favorites.push(newFavorite);
+    return newFavorite;
+  },
+
+  removeFavorite: (_parent: any, arg: argType) => {
+    const { userId, productId } = arg;
+
+    const favoriteIndex = favorites.findIndex(favorite => favorite.userId === userId && favorite.productId === productId);
+    if (favoriteIndex === -1) {
+      throw new GraphQLError("この商品はお気に入りに追加されていません。");
+    }
+
+    favorites.splice(favoriteIndex, 1);
+    return true;
   }
 }

@@ -1,4 +1,4 @@
-import { categories, reviews } from "../../models/data.ts";
+import { categories, favorites, reviews, users } from "../../models/data.ts";
 import { argType, ProductType } from '../../models/types.ts';
 import { filterReviews } from "../../utils/filters.ts";
 import { sortByRating } from "../../utils/sorts.ts";
@@ -49,5 +49,19 @@ export const Product = {
     
     const totalRating = productReviews.reduce((sum, review) => sum + review.rating, 0);
     return totalRating / productReviews.length;
+  },
+
+  /**
+   * @description 商品をお気に入りにしているユーザーを取得する
+   * @param {Product} product 商品
+   * @returns {User[]} ユーザー
+  */
+  favoritedBy: (product: ProductType) => {
+    const productFavorites = favorites.filter(favorite => favorite.productId === product.id);
+    if (productFavorites.length === 0) return [];
+
+    return users.filter(user =>
+      productFavorites.some(favorite => favorite.userId === user.id)
+    );
   }
 }

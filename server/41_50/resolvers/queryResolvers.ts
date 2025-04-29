@@ -1,4 +1,4 @@
-import { categories, products, reviews, users } from "../models/data.ts";
+import { categories, favorites, products, reviews, users } from "../models/data.ts";
 import { argType } from "../models/types.ts";
 import { filterProducts, filterReviews } from "../utils/filters.ts";
 

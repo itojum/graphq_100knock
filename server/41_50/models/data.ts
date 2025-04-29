@@ -1,4 +1,4 @@
-import { CategoryType, ProductType, ReviewType, UserType } from "./types.ts";
+import { CategoryType, FavoriteType, ProductType, ReviewType, UserType } from "./types.ts";
 
 const categories: CategoryType[] = [
   {
@@ -432,4 +432,7 @@ const users: UserType[] = [
   }
 ]
 
-export { categories, products, reviews, users }
+const favorites: FavoriteType[] = [
+]
+
+export { categories, products, reviews, users, favorites }
