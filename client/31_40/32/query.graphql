@@ -1,0 +1,8 @@
+query ExampleQuery($productId: ID!) {
+  product(id: $productId) {
+    reviews {
+      rating
+      content
+    }
+  }
+}
