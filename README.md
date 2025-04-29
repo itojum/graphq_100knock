@@ -222,3 +222,123 @@ type Mutation {
 38. 商品ごとのレビュー件数 - `Product`型に`reviewCount`フィールドを追加して件数を取得
 39. 高評価レビューとレビュアー - `reviews(minRating)`で高評価レビュー＋その投稿者情報を取得
 40. 商品の平均評価 - `Product`型に`averageRating`フィールドを追加して平均評価を計算
+
+### 41〜50本目
+#### 使用スキーマ
+```graphql
+type Category {
+  id: ID!
+  name: String!
+  products(filter: ProductFilterInput): [Product!]!
+}
+
+type Product {
+  id: ID!
+  name: String!
+  description: String!
+  price: Float!
+  category: Category!
+  reviews(filter: ReviewFilterInput, sortBy: ReviewsSortBy): [Review!]!
+  reviewCount: Int!
+  averageRating: Float
+  favoritedBy: [User!]!
+}
+
+type Review {
+  id: ID!
+  content: String!
+  rating: Int!
+  product: Product!
+  user: User!
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  bio: String
+  location: String
+  website: String
+  registeredAt: String!
+  reviews: [Review!]!
+  favorites: [Product!]!
+  favoriteProductCount: Int!
+  followers: [User!]!
+  following: [User!]!
+  followerCount: Int!
+  followingCount: Int!
+}
+
+type Favorite {
+  user: User!
+  product: Product!
+}
+
+type Follow {
+  user: User!
+  following: [User!]!
+}
+
+type ProductConnection {
+  items: [Product!]!
+  pageInfo: PageInfo!
+}
+
+type PageInfo {
+  totalCount: Int!
+  totalPages: Int!
+  currentPage: Int!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
+input ProductFilterInput {
+  minPrice: Float
+  maxPrice: Float
+}
+
+input ReviewFilterInput {
+  minRating: Int
+}
+
+enum ReviewsSortBy {
+  RATING_ASC
+  RATING_DESC
+}
+
+type Query {
+  category(id: ID!): Category
+  categories: [Category!]!
+  product(id: ID!): Product
+  products(filter: ProductFilterInput): [Product!]!
+  reviews(filter: ReviewFilterInput): [Review!]!
+  user(id: ID!): User
+  users: [User!]!
+  searchUsers(query: String!): [User!]!
+  paginatedProducts(page: Int!, limit: Int!): ProductConnection!
+}
+
+type Mutation {
+  createCategory(name: String!): Category!
+  createProduct(name: String!, description: String!, price: Float!, categoryId: ID!): Product!
+  updateProduct(id: ID!, name: String, description: String, price: Float): Product!
+  createReview(content: String!, rating: Int!, productId: ID!, userId: ID!): Review!
+  addFavorite(userId: ID!, productId: ID!): Favorite!
+  removeFavorite(userId: ID!, productId: ID!): Boolean!
+  followUser(userId: ID!, followingId: ID!): Follow!
+  unfollowUser(userId: ID!, followingId: ID!): Boolean!
+  updateUserProfile(userId: ID!, bio: String, location: String, website: String): User!
+}
+```
+
+#### 出題内容
+41. 不正なレビューをブロックせよ - `createReview`にバリデーションを追加し、不正データを防ぐ
+42. 同一商品の重複レビューを防げ - 同じユーザーが同じ商品に複数レビューできないようにする
+43. お気に入り商品機能を追加せよ - ユーザーが商品をお気に入り登録・解除できる機能を実装
+44. お気に入り商品件数を取得せよ - `User`型に`favoriteProductCount`フィールドを追加
+45. ユーザーフォロー機能を実装せよ - ユーザー間のフォロー関係を表現する基本機能を実装
+46. フォロー/フォロワー情報を拡張せよ - フォロー中一覧とフォロワー数・フォロー数の取得機能
+47. フォロー解除機能を実装せよ - `unfollowUser`ミューテーションでフォロー関係を解除する
+48. ユーザープロフィールを拡張せよ - ユーザーの自己紹介・居住地・ウェブサイト等の情報を追加
+49. ユーザー検索機能を実装せよ - 名前・自己紹介・居住地を対象とした検索機能を追加
+50. ページネーション機能を実装せよ - 大量データを効率的に取得するためのページ分割機能
