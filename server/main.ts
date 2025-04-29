@@ -1,7 +1,7 @@
 import { ApolloServer } from "apollo-server";
 
 const knockDirectory = Deno.args[0];
-import(`./${knockDirectory}/schema.ts`).then((module) => {
+import(`./${knockDirectory}/index.ts`).then((module) => {
   const typeDefs = module.typeDefs;
   const resolvers = module.resolvers;
 

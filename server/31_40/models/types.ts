@@ -17,3 +17,7 @@ export type Review = {
   rating: number
   productId: string
 }
+
+export type argType = {
+  [key: string]: any
+}
