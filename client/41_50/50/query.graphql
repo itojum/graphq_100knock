@@ -1,0 +1,16 @@
+query ExampleQuery($page: Int!, $limit: Int!) {
+  paginatedProducts(page: $page, limit: $limit) {
+    items {
+      name
+      description
+      price
+    }
+    pageInfo {
+      totalCount
+      totalPages
+      currentPage
+      hasNextPage
+      hasPreviousPage
+    }
+  }
+}

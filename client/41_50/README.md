@@ -145,3 +145,31 @@
 - 検索は大文字・小文字を区別しない（case-insensitive）実装にするとユーザーフレンドリーです
 - JavaScriptの`String.prototype.toLowerCase()`と`String.prototype.includes()`を組み合わせて実装するとよいでしょう
 - 複数のフィールドで検索する場合は、OR条件（いずれかのフィールドが一致）として実装しましょう
+
+## 50: ページネーション機能を実装しよう
+
+### お題
+大量のデータを効率的に取得できるよう、ページネーション機能を実装してください。
+
+### 要件
+- `paginatedProducts(page: Int!, limit: Int!): ProductConnection!` クエリを追加してください
+- 以下の型を新たに定義してください：
+  - `ProductConnection` 型 - ページネーション情報を含む商品リスト
+  - `PageInfo` 型 - ページネーションのメタ情報（全件数、総ページ数など）
+- `ProductConnection` 型には以下のフィールドを含めてください：
+  - `items: [Product!]!` - そのページの商品リスト
+  - `pageInfo: PageInfo!` - ページネーション情報
+- `PageInfo` 型には以下のフィールドを含めてください：
+  - `totalCount: Int!` - 全商品数
+  - `totalPages: Int!` - 総ページ数
+  - `currentPage: Int!` - 現在のページ番号
+  - `hasNextPage: Boolean!` - 次のページがあるかどうか
+  - `hasPreviousPage: Boolean!` - 前のページがあるかどうか
+
+### ヒント
+- ページネーションの計算方法：
+  - 表示するアイテム = items.slice((page - 1) * limit, page * limit)
+  - 総ページ数 = Math.ceil(totalCount / limit)
+  - 次のページの有無 = currentPage < totalPages
+  - 前のページの有無 = currentPage > 1
+- エラーハンドリングも実装しましょう。例えば、存在しないページを指定した場合は適切なエラーを返すようにする

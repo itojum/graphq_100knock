@@ -52,6 +52,19 @@ export const typeDefs = `#graphql
     following: [User!]!
   }
 
+  type ProductConnection {
+    items: [Product!]!
+    pageInfo: PageInfo!
+  }
+
+  type PageInfo {
+    totalCount: Int!
+    totalPages: Int!
+    currentPage: Int!
+    hasNextPage: Boolean!
+    hasPreviousPage: Boolean!
+  }
+
   input ProductFilterInput {
     minPrice: Float
     maxPrice: Float
@@ -74,6 +87,7 @@ export const typeDefs = `#graphql
     user(id: ID!): User
     users: [User!]!
     searchUsers(query: String!): [User!]!
+    paginatedProducts(page: Int!, limit: Int!): ProductConnection!
   }
 
   type Mutation {

@@ -1,3 +1,4 @@
+import { GraphQLError } from "graphql";
 import { categories, favorites, products, reviews, users } from "../models/data.ts";
 import { argType } from "../models/types.ts";
 import { filterProducts, filterReviews } from "../utils/filters.ts";
@@ -81,5 +82,42 @@ export const Query = {
       || user.bio.toLocaleLowerCase().includes(lowerCaseQuery)
       || user.location.toLocaleLowerCase().includes(lowerCaseQuery)
     );
+  },
+
+  /**
+   * 商品をページネーションで取得する
+   * @param _parent 親の引数
+   * @param arg.page ページ番号
+   * @param arg.limit 1ページあたりの商品数
+   * @returns 商品のリストとページ情報
+   */
+  paginatedProducts(_parent: any, arg: argType) {
+    const { page, limit } = arg;
+
+    if(limit <= 0) {
+      return new GraphQLError("limitは1以上の整数である必要があります。");
+    }
+    
+    const items = products.slice((page - 1) * limit, page * limit);
+
+    const totalCount = products.length;
+    const totalPages = Math.ceil(totalCount / limit);
+
+    if(page < 1 || page > totalPages) {
+      return new GraphQLError("ページが存在しません。");
+    }
+
+    const pageInfo = {
+      totalCount,
+      totalPages,
+      currentPage: page,
+      hasNextPage: page * limit < products.length,
+      hasPreviousPage: page > 1
+    };
+
+    return {
+      items,
+      pageInfo
+    }
   }
 };
