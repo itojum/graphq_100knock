@@ -1,0 +1,9 @@
+mutation ExampleMutation($userId: ID!, $bio: String, $location: String, $website: String) {
+  updateUserProfile(userId: $userId, bio: $bio, location: $location, website: $website) {
+    id
+    name
+    bio
+    location
+    website
+  }
+}

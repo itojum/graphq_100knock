@@ -1,5 +1,5 @@
 import { GraphQLError } from "graphql";
-import { categories, favorites, follows, products, reviews } from "../models/data.ts";
+import { categories, favorites, follows, products, reviews, users } from "../models/data.ts";
 import { argType, FavoriteType } from "../models/types.ts";
 import { validateReview } from "../utils/validates/review.ts";
 
@@ -170,5 +170,28 @@ export const Mutation = {
 
     follows.splice(followIndex, 1);
     return true;
+  },
+
+  /** 
+   * @description ユーザープロフィールを更新する
+   * @param {string} arg.userId ユーザーID
+   * @param {string} arg.bio 自己紹介
+   * @param {string} arg.location 居住地
+   * @param {string} arg.website ウェブサイト
+   * @returns {User} 更新したユーザー
+   * */
+  updateUserProfile: (_parent: any, arg: argType) => {
+    const { userId, bio, location, website } = arg;
+    
+    const user = users.find(user => user.id === userId);
+    if (!user) {
+      throw new GraphQLError("ユーザーが見つかりません。");
+    }
+
+    user.bio = bio || user.bio;
+    user.location = location || user.location;
+    user.website = website || user.website;
+
+    return user;
   }
 }

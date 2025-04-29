@@ -29,6 +29,10 @@ export const typeDefs = `#graphql
     id: ID!
     name: String!
     email: String!
+    bio: String
+    location: String
+    website: String
+    registeredAt: String!
     reviews: [Review!]!
     favorites: [Product!]!
     favoriteProductCount: Int!
@@ -80,5 +84,6 @@ export const typeDefs = `#graphql
     removeFavorite(userId: ID!, productId: ID!): Boolean!
     followUser(userId: ID!, followingId: ID!): Follow!
     unfollowUser(userId: ID!, followingId: ID!): Boolean!
+    updateUserProfile(userId: ID!, bio: String, location: String, website: String): User!
   }
 `;

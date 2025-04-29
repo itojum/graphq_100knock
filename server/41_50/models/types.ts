@@ -23,6 +23,10 @@ export type UserType = {
   id: string
   name: string
   email: string
+  bio: string
+  location: string
+  website: string
+  registeredAt: string
 }
 
 export type FavoriteType = {
