@@ -165,7 +165,7 @@ export const Mutation = {
 
     const followIndex = follows.findIndex(follow => follow.userId === userId && follow.followingId === followingId);
     if (followIndex === -1) {
-      throw new GraphQLError("このユーザーはフォローされていません。");
+      return false;
     }
 
     follows.splice(followIndex, 1);

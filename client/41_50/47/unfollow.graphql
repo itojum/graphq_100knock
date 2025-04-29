@@ -1,0 +1,3 @@
+mutation ExampleMutation($userId: ID!, $followingId: ID!) {
+  unfollowUser(userId: $userId, followingId: $followingId) 
+}
