@@ -62,5 +62,24 @@ export const Query = {
   */
   user: (_parent: any, arg: argType) => {
     return users.find(user => user.id === arg.id);
+  },
+
+  /**
+   * ユーザーを名前と自己紹介、場所で検索する
+   * @param _parent 親の引数
+   * @param arg.query 検索クエリ
+   * @returns 検索結果
+   * */
+  searchUsers: (_parent: any, arg: argType) => {
+    const { query } = arg;
+    if(!query) return users;
+
+    const lowerCaseQuery = query.toLowerCase();
+
+    return users.filter(user => 
+      user.name.toLocaleLowerCase().includes(lowerCaseQuery) 
+      || user.bio.toLocaleLowerCase().includes(lowerCaseQuery)
+      || user.location.toLocaleLowerCase().includes(lowerCaseQuery)
+    );
   }
 };

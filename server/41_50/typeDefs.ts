@@ -73,6 +73,7 @@ export const typeDefs = `#graphql
     reviews(filter: ReviewFilterInput): [Review!]!
     user(id: ID!): User
     users: [User!]!
+    searchUsers(query: String!): [User!]!
   }
 
   type Mutation {

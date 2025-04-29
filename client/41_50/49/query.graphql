@@ -1,0 +1,11 @@
+query ExampleQuery($query: String!) {
+  searchUsers(query: $query) {
+    id
+    name
+    email
+    bio
+    location
+    website
+    registeredAt
+  }
+}
