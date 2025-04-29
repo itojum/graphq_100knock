@@ -1,4 +1,4 @@
-import { categories, products, reviews } from "../models/data.ts";
+import { categories, products, reviews, users } from "../models/data.ts";
 import { argType } from "../models/types.ts";
 import { filterProducts, filterReviews } from "../utils/filters.ts";
 
@@ -46,5 +46,21 @@ export const Query = {
   reviews: (_parent: any, arg: argType) => {
     const { filter } = arg;
     filterReviews(reviews, filter);
+  },
+
+  /**
+   * 全てのユーザーを取得する
+   * @returns 全てのユーザー
+   */
+  users: () => users,
+
+  /**
+   * ユーザーをIDで取得する
+   * @param _parent 親の引数
+   * @param arg.id ユーザーID
+   * @returns ユーザー
+  */
+  user: (_parent: any, arg: argType) => {
+    return users.find(user => user.id === arg.id);
   }
 };

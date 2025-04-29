@@ -62,10 +62,11 @@ export const Mutation = {
    * @param {string} arg.content レビュー内容
    * @param {number} arg.rating レビュー評価 (1-5)
    * @param {string} arg.productId 商品ID
+   * @param {string} arg.userId ユーザーID
    * @returns {Review} 作成したレビュー
    * */
   createReview: (_parent: any, arg: argType) => {
-    const { content, rating, productId } = arg;
+    const { content, rating, productId, userId } = arg;
 
     if (rating < 1 || rating > 5) {
       throw new Error("評価は1から5の間で指定してください。");
@@ -75,7 +76,8 @@ export const Mutation = {
       id: (reviews.length + 1).toString(),
       content,
       rating,
-      productId
+      productId,
+      userId
     };
     reviews.push(newReview);
     return newReview;

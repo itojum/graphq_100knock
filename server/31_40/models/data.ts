@@ -1,6 +1,6 @@
-import { Category, Product, Review } from "./types.ts";
+import { CategoryType, ProductType, ReviewType, UserType } from "./types.ts";
 
-const categories: Category[] = [
+const categories: CategoryType[] = [
   {
     id: "1",
     name: "電子機器"
@@ -23,7 +23,7 @@ const categories: Category[] = [
   }
 ]
 
-const products: Product[] = [
+const products: ProductType[] = [
   {
     id: "1",
     name: "スマートフォン XS",
@@ -166,187 +166,270 @@ const products: Product[] = [
   }
 ]
 
-const reviews: Review[] = [
+const reviews: ReviewType[] = [
   {
     id: "1",
     content: "期待以上の性能です。カメラ品質が特に優れています。バッテリーの持ちも良く、日常使いに最適です。",
     rating: 5,
-    productId: "1"
+    productId: "1",
+    userId: "1"
   },
   {
     id: "2",
     content: "この価格でこの性能は大満足です。操作性も良く、以前の機種からの乗り換えもスムーズでした。",
     rating: 4,
-    productId: "1"
+    productId: "1",
+    userId: "2"
   },
   {
     id: "3",
     content: "画面が美しく、動作も軽快です。クリエイティブな作業がはかどります。バッテリー持ちが若干気になります。",
     rating: 4,
-    productId: "2"
+    productId: "2",
+    userId: "3"
   },
   {
     id: "4",
     content: "仕事用に購入しましたが、持ち運びも楽で便利です。画面が大きく作業効率が上がりました。",
     rating: 5,
-    productId: "2"
+    productId: "2",
+    userId: "4"
   },
   {
     id: "5",
     content: "ノイズキャンセリングが効果的で、電車内でも快適に音楽を楽しめます。フィット感も良いです。",
     rating: 5,
-    productId: "3"
+    productId: "3",
+    userId: "5"
   },
   {
     id: "6",
     content: "音質は良いですが、長時間使用すると耳が少し痛くなります。防水機能は便利です。",
     rating: 3,
-    productId: "3"
+    productId: "3",
+    userId: "6"
   },
   {
     id: "7",
     content: "健康管理機能が充実していて、毎日の活動量を把握するのに役立っています。通知機能も便利です。",
     rating: 4,
-    productId: "4"
+    productId: "4",
+    userId: "7"
   },
   {
     id: "8",
     content: "バッテリーが長持ちして、充電の手間が少なくて済みます。デザインもシンプルで気に入っています。",
     rating: 5,
-    productId: "4"
+    productId: "4",
+    userId: "8"
   },
   {
     id: "9",
     content: "座り心地が良く、リビングの雰囲気も良くなりました。組み立ても簡単でした。",
     rating: 5,
-    productId: "5"
+    productId: "5",
+    userId: "9"
   },
   {
     id: "10",
     content: "想像よりも少し小さく感じましたが、クッション性は良いです。色合いも部屋に合います。",
     rating: 4,
-    productId: "5"
+    productId: "5",
+    userId: "10"
   },
   {
     id: "11",
     content: "丈夫な作りで安定感があります。家族での食事が楽しくなりました。",
     rating: 5,
-    productId: "6"
+    productId: "6",
+    userId: "1"
   },
   {
     id: "12",
     content: "デザインは良いのですが、組み立てが少し難しかったです。使用感は満足しています。",
     rating: 3,
-    productId: "6"
+    productId: "6",
+    userId: "2"
   },
   {
     id: "13",
     content: "長時間座っても疲れにくいです。腰痛持ちの私には最適な椅子でした。",
     rating: 5,
-    productId: "7"
+    productId: "7",
+    userId: "3"
   },
   {
     id: "14",
     content: "調整機能が多く、自分に合った設定ができて快適です。組み立ては少し時間がかかりました。",
     rating: 4,
-    productId: "7"
+    productId: "7",
+    userId: "4"
   },
   {
     id: "15",
     content: "収納スペースが便利で、部屋がすっきりしました。マットレスもぴったり合います。",
     rating: 5,
-    productId: "8"
+    productId: "8",
+    userId: "5"
   },
   {
     id: "16",
     content: "組み立ては2人で行うことをお勧めします。完成品は丈夫で使いやすいです。",
     rating: 4,
-    productId: "8"
+    productId: "8",
+    userId: "6"
   },
   {
     id: "17",
     content: "素材が良く、着心地が最高です。撥水加工も効果的で雨の日も安心です。",
     rating: 5,
-    productId: "9"
+    productId: "9",
+    userId: "7"
   },
   {
     id: "18",
     content: "デザインはシンプルで使いやすいですが、サイズが少し大きめです。質感は良いです。",
     rating: 4,
-    productId: "9"
+    productId: "9",
+    userId: "8"
   },
   {
     id: "19",
     content: "オフィスでも違和感なく着られるデザインで重宝しています。洗濯後の乾きも早いです。",
     rating: 5,
-    productId: "10"
+    productId: "10",
+    userId: "9"
   },
   {
     id: "20",
     content: "生地が少し薄いように感じましたが、デザインは気に入っています。",
     rating: 3,
-    productId: "10"
+    productId: "10",
+    userId: "10"
   },
   {
     id: "21",
     content: "履き心地が良く、長時間歩いても疲れません。デザインもシンプルで合わせやすいです。",
     rating: 5,
-    productId: "11"
+    productId: "11",
+    userId: "1"
   },
   {
     id: "22",
     content: "サイズ感が少し小さめなので、ワンサイズ上をお勧めします。品質は良いです。",
     rating: 4,
-    productId: "11"
+    productId: "11",
+    userId: "2"
   },
   {
     id: "23",
     content: "収納力があり、PCも安全に持ち運べます。防水性能も信頼できます。",
     rating: 5,
-    productId: "12"
+    productId: "12",
+    userId: "3"
   },
   {
     id: "24",
     content: "デザインがシンプルで使いやすいですが、肩紐のクッション性がもう少しあると良いと思います。",
     rating: 4,
-    productId: "12"
+    productId: "12",
+    userId: "4"
   },
   {
     id: "25",
     content: "香りが豊かで、朝の一杯が格別です。エチオピア特有のフルーティーさが感じられます。",
     rating: 5,
-    productId: "13"
+    productId: "13",
+    userId: "5"
   },
   {
     id: "26",
     content: "品質は良いですが、個人的には少し酸味が強く感じました。焙煎度合いの好みの問題かもしれません。",
     rating: 3,
-    productId: "13"
+    productId: "13",
+    userId: "6"
   },
   {
     id: "27",
     content: "料理の風味が格段に上がりました。本場イタリアの味を家庭で楽しめます。",
     rating: 5,
-    productId: "14"
+    productId: "14",
+    userId: "7"
   },
   {
     id: "28",
     content: "コスパが良く、日常使いに最適です。パンに付けても美味しいです。",
     rating: 4,
-    productId: "14"
+    productId: "14",
+    userId: "8"
   },
   {
     id: "29",
     content: "初心者にもわかりやすく解説されています。実践的な例題が多いので、すぐに活用できます。",
     rating: 5,
-    productId: "17"
+    productId: "17",
+    userId: "9"
   },
   {
     id: "30",
     content: "豊富なレシピが掲載されていて、毎日の料理が楽しくなりました。写真も美しく参考になります。",
     rating: 5,
-    productId: "20"
+    productId: "20",
+    userId: "10"
   }
 ]
 
-export { categories, products, reviews }
+const users: UserType[] = [
+  {
+    id: "1",
+    name: "佐藤太郎",
+    email: "taro.sato@example.com"
+  },
+  {
+    id: "2",
+    name: "鈴木花子",
+    email: "hanako.suzuki@example.com"
+  },
+  {
+    id: "3",
+    name: "田中一郎",
+    email: "ichiro.tanaka@example.com"
+  },
+  {
+    id: "4",
+    name: "伊藤美咲",
+    email: "misaki.ito@example.com"
+  },
+  {
+    id: "5",
+    name: "渡辺健太",
+    email: "kenta.watanabe@example.com"
+  },
+  {
+    id: "6",
+    name: "山本結衣",
+    email: "yui.yamamoto@example.com"
+  },
+  {
+    id: "7",
+    name: "中村大輔",
+    email: "daisuke.nakamura@example.com"
+  },
+  {
+    id: "8",
+    name: "小林さくら",
+    email: "sakura.kobayashi@example.com"
+  },
+  {
+    id: "9",
+    name: "加藤雄一",
+    email: "yuichi.kato@example.com"
+  },
+  {
+    id: "10",
+    name: "吉田麻衣",
+    email: "mai.yoshida@example.com"
+  }
+]
+
+export { categories, products, reviews, users }

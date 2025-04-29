@@ -19,6 +19,14 @@ export const typeDefs = `#graphql
     content: String!
     rating: Int!
     product: Product!
+    user: User!
+  }
+
+  type User {
+    id: ID!
+    name: String!
+    email: String!
+    reviews: [Review!]!
   }
 
   input ProductFilterInput {
@@ -40,12 +48,14 @@ export const typeDefs = `#graphql
     product(id: ID!): Product
     products(filter: ProductFilterInput): [Product!]!
     reviews(filter: ReviewFilterInput): [Review!]!
+    user(id: ID!): User
+    users: [User!]!
   }
 
   type Mutation {
     createCategory(name: String!): Category!
     createProduct(name: String!, description: String!, price: Float!, categoryId: ID!): Product!
     updateProduct(id: ID!, name: String, description: String, price: Float): Product!
-    createReview(content: String!, rating: Int!, productId: ID!): Review!
+    createReview(content: String!, rating: Int!, productId: ID!, userId: ID!): Review!
   }
 `;

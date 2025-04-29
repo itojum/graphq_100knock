@@ -16,6 +16,13 @@ export type ReviewType = {
   content: string
   rating: number
   productId: string
+  userId: string
+}
+
+export type UserType = {
+  id: string
+  name: string
+  email: string
 }
 
 export type argType = {

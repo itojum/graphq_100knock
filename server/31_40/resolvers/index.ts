@@ -3,6 +3,7 @@ import { Query } from "./queryResolvers.ts";
 import { Category } from "./types/categories.ts";
 import { Product } from "./types/products.ts";
 import { Review } from "./types/reviews.ts";
+import { User } from "./types/users.ts";
 
 
 export const resolvers = {
@@ -10,5 +11,6 @@ export const resolvers = {
   Mutation,
   Category,
   Product,
-  Review
+  Review,
+  User
 };
