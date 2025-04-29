@@ -1,0 +1,9 @@
+query ExampleQuery($productId: ID!, $minRating: Int!) {
+  product(id: $productId) {
+    name
+    reviews(filter: { minRating: $minRating }) {
+      rating
+      content
+    }
+  }
+}

@@ -15,7 +15,7 @@ const typeDefs = `#graphql
     description: String!
     price: Float!
     category: Category!
-    reviews: [Review!]!
+    reviews(filter: ReviewFilterInput): [Review!]!
   }
 
   type Review {
@@ -30,13 +30,17 @@ const typeDefs = `#graphql
     maxPrice: Float
   }
 
+  input ReviewFilterInput {
+    minRating: Int
+  }
+
   type Query {
     category(id: ID!): Category
     categories: [Category!]!
     product(id: ID!): Product
     products(filter: ProductFilterInput): [Product!]!
     productsByCategory(categoryId: ID!): [Product!]!
-    reviews: [Review!]!
+    reviews(filter: ReviewFilterInput): [Review!]!
   }
 
   type Mutation {
@@ -50,6 +54,16 @@ const typeDefs = `#graphql
 type argType = {
   // deno-lint-ignore no-explicit-any
   [key: string]: any;
+}
+
+const filterReviews = (reviewsList: Review[], filter: any) =>  {
+  if (!filter) return reviewsList;
+  
+  const { minRating } = filter;
+  return reviewsList.filter(review => {
+    if (minRating && review.rating < minRating) return false;
+    return true;
+  });
 }
 
 const resolvers = {
@@ -76,7 +90,10 @@ const resolvers = {
     productsByCategory: (_parent: any, arg: argType) => {
       return products.filter(product => product.categoryId === arg.categoryId);
     },
-    reviews: () => reviews,
+    reviews: (_parent: any, arg: argType) => {
+      const { filter } = arg;
+      filterReviews(reviews, filter);
+    }
   },
   Mutation: {
     createCategory: (_parent: any, arg: argType) => {
@@ -138,9 +155,11 @@ const resolvers = {
     category: (product: Product) => {
       return categories.find(category => category.id === product.categoryId);
     },
-    reviews: (product: Product) => {
+    reviews: (product: Product, arg: argType) => {
+      const { filter } = arg;
+      const productReviews = reviews.filter(review => review.productId === product.id);
       
-      return reviews.filter(review => review.productId === product.id);
+      return filterReviews(productReviews, filter);
     }
   },
   Review: {
