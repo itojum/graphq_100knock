@@ -38,11 +38,11 @@ export const Query = {
     return filterProducts(products, filter);
   },
   /**
-   * 商品をIDで取得する
+   * 全てのレビューを取得する
    * @param _parent 親の引数
    * @param arg.filter フィルター条件
-   * @returns 商品
-  */
+   * @returns 全てのレビュー
+   * */
   reviews: (_parent: any, arg: argType) => {
     const { filter } = arg;
     return filterReviews(reviews, filter);
