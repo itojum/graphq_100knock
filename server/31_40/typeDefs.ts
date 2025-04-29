@@ -11,7 +11,7 @@ export const typeDefs = `#graphql
     description: String!
     price: Float!
     category: Category!
-    reviews(filter: ReviewFilterInput): [Review!]!
+    reviews(filter: ReviewFilterInput, sortBy: ReviewsSortBy): [Review!]!
   }
 
   type Review {
@@ -28,6 +28,10 @@ export const typeDefs = `#graphql
 
   input ReviewFilterInput {
     minRating: Int
+  }
+  enum ReviewsSortBy {
+    RATING_ASC
+    RATING_DESC
   }
 
   type Query {

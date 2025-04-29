@@ -1,0 +1,9 @@
+query ExampleQuery($productId: ID!, $sortBy: ReviewsSortBy!) {
+  product(id: $productId) {
+    name
+    reviews(sortBy: $sortBy) {
+      rating
+      content
+    }
+  }
+}
