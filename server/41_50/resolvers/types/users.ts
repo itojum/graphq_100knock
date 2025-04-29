@@ -36,15 +36,15 @@ export const User = {
 
 
   /**
-   * @description フォローしているユーザーを取得する
+   * @description ユーザーをフォローしているユーザーを取得する
    * @param {User} user ユーザー
    */
   followers: (user: UserType) => {
-    const userFollowers = follows.filter(follow => follow.userId === user.id);
+    const userFollowers = follows.filter(follow => follow.followingId === user.id);
     if (userFollowers.length === 0) return [];
 
     return users.filter(user =>
-      userFollowers.find(follow => follow.followingId === user.id)
+      userFollowers.find(follow => follow.userId === user.id)
     );
   }
 }
