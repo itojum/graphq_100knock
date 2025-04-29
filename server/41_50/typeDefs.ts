@@ -33,6 +33,9 @@ export const typeDefs = `#graphql
     favorites: [Product!]!
     favoriteProductCount: Int!
     followers: [User!]!
+    following: [User!]!
+    followerCount: Int!
+    followingCount: Int!
   }
 
   type Favorite {

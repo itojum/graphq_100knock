@@ -46,5 +46,34 @@ export const User = {
     return users.filter(user =>
       userFollowers.find(follow => follow.userId === user.id)
     );
-  }
+  },
+
+  /**
+   * @description フォローしているユーザーを取得する
+   * @param {User} user ユーザー
+   */
+  following: (user: UserType) => {
+    const userFollowing = follows.filter(follow => follow.userId === user.id);
+    if (userFollowing.length === 0) return [];
+
+    return users.filter(user =>
+      userFollowing.find(follow => follow.followingId === user.id)
+    );
+  },
+
+  /**
+   * @description フォロワー数を取得する
+   * @param {User} user ユーザー
+   */
+  followerCount: (user: UserType) => {
+    return follows.filter(follow => follow.followingId === user.id).length;
+  },
+
+  /**
+   * @description フォローしているユーザー数を取得する
+   * @param {User} user ユーザー
+   */
+  followingCount: (user: UserType) => {
+    return follows.filter(follow => follow.userId === user.id).length;
+  },
 }

@@ -1,0 +1,12 @@
+query ExampleQuery($userId: ID!) {
+  user(id: $userId) {
+    followerCount
+    followers {
+      name
+    }
+    followingCount
+    following {
+      name
+    }
+  }
+}
