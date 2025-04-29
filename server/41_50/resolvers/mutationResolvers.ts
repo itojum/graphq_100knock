@@ -78,9 +78,12 @@ export const Mutation = {
       userId
     };
 
-    
     validateReview(newReview);
 
+    if(reviews.find(review => review.userId === userId && review.productId === productId)) {
+      throw new GraphQLError("この商品に対するレビューは既に存在します。");
+    }
+    
     reviews.push(newReview);
     return newReview;
   }
