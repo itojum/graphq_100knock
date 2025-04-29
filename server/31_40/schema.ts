@@ -25,11 +25,16 @@ const typeDefs = `#graphql
     product: Product!
   }
 
+  input ProductFilterInput {
+    minPrice: Float
+    maxPrice: Float
+  }
+
   type Query {
     category(id: ID!): Category
     categories: [Category!]!
     product(id: ID!): Product
-    products: [Product!]!
+    products(filter: ProductFilterInput): [Product!]!
     productsByCategory(categoryId: ID!): [Product!]!
     reviews: [Review!]!
   }
@@ -56,7 +61,18 @@ const resolvers = {
     product: (_parent: any, arg: argType) => { 
       return products.find(product => product.id === arg.id);
     },
-    products: () => products,
+    products: (_parent: any, arg: argType) => {
+      const { filter } = arg;
+      if(!filter) return products;
+
+      const { minPrice, maxPrice } = filter;
+      
+      return products.filter(product => {
+        if(minPrice && product.price < minPrice) return false;
+        if(maxPrice && product.price > maxPrice) return false;
+        return true;
+      })
+    },
     productsByCategory: (_parent: any, arg: argType) => {
       return products.filter(product => product.categoryId === arg.categoryId);
     },
