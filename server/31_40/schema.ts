@@ -112,6 +112,11 @@ const resolvers = {
     },
     createReview: (_parent: any, arg: argType) => {
       const { content, rating, productId } = arg;
+
+      if (rating < 1 || rating > 5) {
+        throw new Error("評価は1から5の間で指定してください。");
+      }
+
       const newReview = {
         id: (reviews.length + 1).toString(),
         content,
