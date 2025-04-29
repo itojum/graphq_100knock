@@ -1,4 +1,4 @@
-import { products } from "../../models/data.ts";
+import { products, users } from "../../models/data.ts";
 import { ReviewType } from '../../models/types.ts';
 
 export const Review = {
@@ -9,5 +9,8 @@ export const Review = {
    */
   product: (review: ReviewType) => {
     return products.find(product => product.id === review.productId);
+  },
+  user: (review: ReviewType) => {
+    return users.find(user => user.id === review.userId);
   }
 }

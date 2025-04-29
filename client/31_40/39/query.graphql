@@ -1,0 +1,9 @@
+query ExampleQuery($minRating: Int!) {
+  reviews(filter: { minRating: $minRating }) {
+    rating
+    content
+    user {
+      name
+    }
+  }
+}

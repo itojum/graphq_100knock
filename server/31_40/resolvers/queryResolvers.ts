@@ -45,7 +45,7 @@ export const Query = {
   */
   reviews: (_parent: any, arg: argType) => {
     const { filter } = arg;
-    filterReviews(reviews, filter);
+    return filterReviews(reviews, filter);
   },
 
   /**
