@@ -1,5 +1,5 @@
 import { products } from "../../models/data.ts";
-import { Review as ReviewType } from '../../models/types.ts';
+import { ReviewType } from '../../models/types.ts';
 
 export const Review = {
   /**

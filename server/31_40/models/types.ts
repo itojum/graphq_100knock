@@ -1,9 +1,9 @@
-export type Category = {
+export type CategoryType = {
   id: string
   name: string
 }
 
-export type Product = {
+export type ProductType = {
   id: string
   name: string
   description: string
@@ -11,7 +11,7 @@ export type Product = {
   categoryId: string
 }
 
-export type Review = {
+export type ReviewType = {
   id: string
   content: string
   rating: number

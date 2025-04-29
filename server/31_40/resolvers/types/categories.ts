@@ -1,5 +1,5 @@
 import { products } from "../../models/data.ts";
-import { argType, Category as CategoryType } from '../../models/types.ts';
+import { argType, CategoryType } from '../../models/types.ts';
 import { filterProducts } from "../../utils/filters.ts";
 
 export const Category = {

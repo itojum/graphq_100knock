@@ -1,4 +1,4 @@
-import { Product, Review } from "../models/types.ts";
+import { ProductType, ReviewType } from "../models/types.ts";
 
 type reviewsFilterInput = {
   minRating?: number;
@@ -9,7 +9,7 @@ type productsFilterInput = {
   maxPrice?: number;
 }
 
-export const filterReviews = (reviewsList: Review[], filter: reviewsFilterInput) =>  {
+export const filterReviews = (reviewsList: ReviewType[], filter: reviewsFilterInput) =>  {
   if (!filter) return reviewsList;
   
   const { minRating } = filter;
@@ -19,7 +19,7 @@ export const filterReviews = (reviewsList: Review[], filter: reviewsFilterInput)
   });
 }
 
-export const filterProducts = (productsList: Product[], filter: productsFilterInput) => {
+export const filterProducts = (productsList: ProductType[], filter: productsFilterInput) => {
   if (!filter) return productsList;
 
   const { minPrice, maxPrice } = filter;

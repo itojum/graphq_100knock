@@ -1,5 +1,5 @@
 import { categories, reviews } from "../../models/data.ts";
-import { argType, Product as ProductType } from '../../models/types.ts';
+import { argType, ProductType } from '../../models/types.ts';
 import { filterReviews } from "../../utils/filters.ts";
 import { sortByRating } from "../../utils/sorts.ts";
 
@@ -23,7 +23,7 @@ export const Product = {
     const productReviews = reviews.filter(review => review.productId === product.id);
 
     const filteredReviews = filterReviews(productReviews, filter);
-    
+
     if (!sortBy) return filteredReviews;
     
     return sortByRating(filteredReviews, sortBy);
