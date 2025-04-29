@@ -31,6 +31,7 @@ export const typeDefs = `#graphql
     email: String!
     reviews: [Review!]!
     favorites: [Product!]!
+    favoriteProductCount: Int!
   }
 
   type Favorite {

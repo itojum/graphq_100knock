@@ -23,5 +23,14 @@ export const User = {
     return products.filter(product =>
       userFavorites.some(favorite => favorite.productId === product.id)
     );
+  },
+
+  /**
+   * お気に入りの商品数を取得する
+   * @param {User} user ユーザー
+   * @returns {number} 商品数
+   * */
+  favoriteProductCount: (user: UserType) => {
+    return favorites.filter(favorite => favorite.userId === user.id).length;
   }
 }
