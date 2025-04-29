@@ -140,13 +140,85 @@ type Mutation {
 ```
 
 #### 出題内容
-21. カテゴリの作成 - `createCategory` Mutationを使ってカテゴリを作成する
-22. 商品の作成 - `createProduct` Mutationで商品を作成する（カテゴリと紐づける）
-23. 商品一覧取得 - `products`クエリで全商品を取得する
-24. カテゴリ別商品取得 - `productsByCategory`クエリでカテゴリごとの商品を取得する
-25. 商品詳細取得 - `product(id: ID!)`で特定の商品を取得する
-26. 商品更新 - `updateProduct` Mutationで商品の情報を更新する
-27. カテゴリ詳細と商品一覧取得 - `category(id)`でカテゴリ情報＋紐づく商品一覧を取得する
-28. 商品詳細とカテゴリ情報取得 - `product(id)`で商品情報＋そのカテゴリ情報を取得する
-29. 連続Mutation実行 - `createCategory`と`createProduct`を連続で実行するシナリオ
-30. 連続作成のエラー対応 - `createCategory`→`createProduct`連携で発生するエラーを修正する
+21. 特定のカテゴリに属する商品一覧を取得せよ - `category(id: ID!)`クエリで特定カテゴリの商品を取得
+22. 商品を新規登録せよ - `createProduct` Mutationで新商品を登録する
+23. 商品詳細を取得せよ - `product(id: ID!)`クエリで商品詳細とカテゴリ名を取得
+24. すべてのカテゴリ名とその商品数を取得せよ - `categories`クエリで全カテゴリとそれぞれの商品数を取得
+25. 特定カテゴリに属する商品の名前と価格を取得せよ - `productsByCategory`クエリで特定カテゴリの商品を取得
+26. 商品の価格を更新せよ - `updateProduct` Mutationで商品価格のみ更新する
+27. カテゴリごとに商品名だけ一覧取得せよ - `categories`クエリでカテゴリと各商品名のみを取得
+28. 商品詳細取得時にカテゴリIDも取得せよ - `product(id)`で商品情報とカテゴリID・名前も取得
+29. 商品リストを価格の高い順に取得せよ - `products`クエリで全商品取得し、クライアント側でソート
+30. 商品とカテゴリをまとめて新規登録せよ - `createCategory`と`createProduct`を1リクエストで連続実行
+
+
+### 31〜40本目
+#### 使用スキーマ
+```graphql
+type Category {
+  id: ID!
+  name: String!
+  products(filter: ProductFilterInput): [Product!]!
+}
+type Product {
+  id: ID!
+  name: String!
+  description: String!
+  price: Float!
+  category: Category!
+  reviews(filter: ReviewFilterInput, sortBy: ReviewsSortBy): [Review!]!
+  reviewCount: Int!
+  averageRating: Float
+}
+type Review {
+  id: ID!
+  content: String!
+  rating: Int!
+  product: Product!
+  user: User!
+}
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  reviews: [Review!]!
+}
+input ProductFilterInput {
+  minPrice: Float
+  maxPrice: Float
+}
+input ReviewFilterInput {
+  minRating: Int
+}
+enum ReviewsSortBy {
+  RATING_ASC
+  RATING_DESC
+}
+type Query {
+  category(id: ID!): Category
+  categories: [Category!]!
+  product(id: ID!): Product
+  products(filter: ProductFilterInput): [Product!]!
+  reviews(filter: ReviewFilterInput): [Review!]!
+  user(id: ID!): User
+  users: [User!]!
+}
+type Mutation {
+  createCategory(name: String!): Category!
+  createProduct(name: String!, description: String!, price: Float!, categoryId: ID!): Product!
+  updateProduct(id: ID!, name: String, description: String, price: Float): Product!
+  createReview(content: String!, rating: Int!, productId: ID!, userId: ID!): Review!
+}
+```
+
+#### 出題内容
+31. 商品レビューの追加 - `createReview` Mutationでレビューを投稿する（商品に紐づける）
+32. 商品のレビュー取得 - `product(id)`クエリで商品情報＋そのレビュー一覧を取得する
+33. 商品の価格絞り込み - `products`クエリに価格範囲（minPrice, maxPrice）で絞り込み機能を追加
+34. レビューのバリデーション - `createReview`で評価（rating）が1〜5の範囲外ならエラーを返す
+35. レビューのフィルタリング - `product.reviews`に`minRating`引数を追加し条件付き取得を実装
+36. レビューのソート機能 - レビュー取得時に評価順（昇順/降順）でソートする機能を追加
+37. ユーザーとレビューのネスト取得 - `user(id)`でユーザーの書いたレビュー一覧＋商品情報を取得
+38. 商品ごとのレビュー件数 - `Product`型に`reviewCount`フィールドを追加して件数を取得
+39. 高評価レビューとレビュアー - `reviews(minRating)`で高評価レビュー＋その投稿者情報を取得
+40. 商品の平均評価 - `Product`型に`averageRating`フィールドを追加して平均評価を計算
