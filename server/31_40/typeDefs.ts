@@ -13,6 +13,7 @@ export const typeDefs = `#graphql
     category: Category!
     reviews(filter: ReviewFilterInput, sortBy: ReviewsSortBy): [Review!]!
     reviewCount: Int!
+    averageRating: Float
   }
 
   type Review {

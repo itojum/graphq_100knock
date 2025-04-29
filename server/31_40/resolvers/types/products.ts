@@ -37,4 +37,17 @@ export const Product = {
   reviewCount: (product: ProductType) => {
     return reviews.filter(review => review.productId === product.id).length;
   },
+
+  /**
+   * @description レビューの平均スコアを取得する
+   * @param {Product} product 商品
+   * @returns {number} 平均スコア
+   */
+  averageRating: (product: ProductType) => {
+    const productReviews = reviews.filter(review => review.productId === product.id);
+    if (productReviews.length === 0) return null;
+    
+    const totalRating = productReviews.reduce((sum, review) => sum + review.rating, 0);
+    return totalRating / productReviews.length;
+  }
 }
