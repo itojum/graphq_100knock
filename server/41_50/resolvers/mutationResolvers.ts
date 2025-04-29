@@ -1,5 +1,7 @@
+import { GraphQLError } from "graphql";
 import { categories, products, reviews } from "../models/data.ts";
 import { argType } from "../models/types.ts";
+import { validateReview } from "../utils/validates/review.ts";
 
 export const Mutation = {
   /** 
@@ -10,7 +12,7 @@ export const Mutation = {
   createCategory: (_parent: any, arg: argType) => {
     const { name } = arg;
     const newCategory = {
-      id: (categories.length + 1).toString(),
+      id: crypto.randomUUID(),
       name
     };
     categories.push(newCategory);
@@ -28,7 +30,7 @@ export const Mutation = {
   createProduct: (_parent: any, arg: argType) => {
     const { name, description, price, categoryId } = arg;
     const newProduct = {
-      id: (products.length + 1).toString(),
+      id: crypto.randomUUID(),
       name,
       description,
       price,
@@ -68,17 +70,17 @@ export const Mutation = {
   createReview: (_parent: any, arg: argType) => {
     const { content, rating, productId, userId } = arg;
 
-    if (rating < 1 || rating > 5) {
-      throw new Error("評価は1から5の間で指定してください。");
-    }
-
     const newReview = {
-      id: (reviews.length + 1).toString(),
+      id: crypto.randomUUID(),
       content,
       rating,
       productId,
       userId
     };
+
+    
+    validateReview(newReview);
+
     reviews.push(newReview);
     return newReview;
   }
