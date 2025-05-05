@@ -1,0 +1,14 @@
+fragment BaseUser on User {
+    id
+    name
+    email
+}
+
+query ExampleQuery($userId: ID!) {
+    user(id: $userId) {
+        ...BaseUser
+    }
+    users {
+        ...BaseUser
+    }
+}
