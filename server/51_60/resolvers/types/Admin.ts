@@ -10,7 +10,7 @@ export const Admin = {
   subordinateUsers: (user: AdminType) => {
     const subordinateUserIds = user.subordinateUserIds;
     return users.filter((subordinateUser) =>
-      subordinateUserIds.includes(subordinateUser.id)
+      subordinateUserIds.includes(subordinateUser.userId)
     );
   },
 }

@@ -95,3 +95,53 @@ User型をAdmin型とRegularUser型に分けた際に、型に応じて異なる
 - インラインフラグメントは型による分岐を行う際に使用します
 - ... on Type の形式で特定の型に対するフィールドを指定できます
 - Fragmentは他のFragmentを含むことができます
+
+## 53本目：Union型を使った検索結果の実装
+
+### お題
+
+商品とユーザーを横断的に検索できる機能を実装してください。検索結果は商品とユーザーの両方を含む可能性があります。
+
+### 前提条件
+
+以下の型が定義されていること：
+
+```graphql
+type Product {
+  id: UUID!
+  name: String!
+  description: String
+  price: Float!
+}
+
+type User {
+  id: UUID!
+  name: String!
+  email: String!
+}
+
+union SearchResult = Product | User
+
+type Query {
+  search(query: String!): [SearchResult!]!
+}
+```
+
+### 要件
+
+1. 商品特有のフィールド（description, price）を取得するFragmentを定義すること
+2. ユーザー特有のフィールド（email）を取得するFragmentを定義すること
+3. Union型に対してインラインフラグメントを使用して、型に応じて適切なフィールドを取得すること
+
+### 期待される結果
+
+- 検索結果には商品とユーザーの両方が含まれる
+- 商品の場合は商品特有のフィールドが取得される
+- ユーザーの場合はユーザー特有のフィールドが取得される
+- 共通フィールドは両方の型で取得される
+
+### ヒント
+
+- Union型に対するクエリでは必ずインラインフラグメントを使用する必要があります
+- Union型では共通フィールドに直接アクセスすることはできません
+- `__typename` フィールドを使って型を判別できます

@@ -1,0 +1,26 @@
+fragment ProductFields on Product {
+    productId
+    name
+    description
+    price
+}
+
+fragment UserFields on BaseUser {
+    userId
+    name
+    email
+}
+
+query ExampleQuery($query: String!) {
+  search(query: $query) {
+    ... on Product {
+        ...ProductFields
+    }
+    ... on Admin {
+        ...UserFields
+    }
+    ... on RegularUser {
+        ...UserFields
+    }
+  }
+}

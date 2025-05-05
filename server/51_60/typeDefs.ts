@@ -1,13 +1,13 @@
 export const typeDefs = `#graphql
   interface BaseUser {
-    id: ID!
+    userId: ID!
     name: String!
     email: String!
     role: UserRole!
   }
 
   type Admin implements BaseUser {
-    id: ID!
+    userId: ID!
     name: String!
     email: String!
     role: UserRole!
@@ -16,7 +16,7 @@ export const typeDefs = `#graphql
   }
 
   type RegularUser implements BaseUser {
-    id: ID!
+    userId: ID!
     name: String!
     email: String!
     role: UserRole!
@@ -27,8 +27,18 @@ export const typeDefs = `#graphql
     USER
   }
 
+  type Product {
+    productId: ID!
+    name: String!
+    description: String
+    price: Float!
+  }
+
+  union SearchResult = Product | Admin | RegularUser
+
   type Query {
     users: [BaseUser!]!
-    user(id: ID!): BaseUser
+    user(userId: ID!): BaseUser
+    search(query: String!): [SearchResult!]!
   }
 `;
