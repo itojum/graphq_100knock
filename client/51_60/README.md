@@ -32,3 +32,66 @@
 - Fragment名は意味のある名前をつけること
 - Fragmentは特定の型に対して定義されること
 - スプレッド構文（...）を使ってFragmentを展開すること
+
+## 52本目：型による分岐を含むFragmentを学ぶ
+
+### お題
+
+User型をAdmin型とRegularUser型に分けた際に、型に応じて異なるフィールドを取得するクエリを実装してください。
+
+### 前提条件
+
+- 以下の型が定義されていること：
+  ```graphql
+  interface BaseUser {
+    id: ID!
+    name: String!
+    email: String!
+    role: UserRole!
+  }
+
+  type Admin implements BaseUser {
+    id: ID!
+    name: String!
+    email: String!
+    role: UserRole!
+    adminLevel: Int!
+    subordinateUsers: [BaseUser!]!
+  }
+
+  type RegularUser implements BaseUser {
+    id: ID!
+    name: String!
+    email: String!
+    role: UserRole!
+  }
+
+  enum UserRole {
+    ADMIN
+    USER
+  }
+
+  type Query {
+    users: [BaseUser!]!
+    user(id: ID!): BaseUser
+  }
+  ```
+
+### 要件
+
+1. BaseUserの共通フィールドをまとめたFragmentを定義すること
+2. インラインフラグメント（... on
+   Type）を使用して、Admin型とRegularUser型それぞれに応じたフィールドを取得すること
+3. 単一のクエリでAdmin型とRegularUser型の情報を適切に取得できること
+
+### 期待される結果
+
+- BaseUser型のフィールドは常に取得される
+- Admin型の場合は adminLevel と subordinateUsers も取得される
+- RegularUser型の場合は共通フィールドのみ取得される
+
+### ヒント
+
+- インラインフラグメントは型による分岐を行う際に使用します
+- ... on Type の形式で特定の型に対するフィールドを指定できます
+- Fragmentは他のFragmentを含むことができます

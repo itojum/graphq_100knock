@@ -1,0 +1,29 @@
+fragment BaseUserFields on BaseUser {
+    id
+    name
+    email
+    role
+}
+
+fragment AdminUserFields on Admin {
+    ...BaseUserFields
+    adminLevel
+    subordinateUsers {
+        name
+    }
+}
+
+fragment RegularUserFields on RegularUser {
+    ...BaseUserFields
+}
+
+query ExampleQuery {
+    users {
+        ... on RegularUser {
+            ...RegularUserFields
+        }
+        ... on Admin {
+            ...AdminUserFields
+        }
+    }
+}

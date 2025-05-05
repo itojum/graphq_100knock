@@ -1,45 +1,20 @@
-export type CategoryType = {
-  id: string
-  name: string
-}
+export type UUID = string;
 
-export type ProductType = {
-  id: string
-  name: string
-  description: string
-  price: number
-  categoryId: string
-}
+export type BaseUserType = {
+  id: UUID;
+  name: string;
+  email: string;
+  role: UserRole;
+};
 
-export type ReviewType = {
-  id: string
-  content: string
-  rating: number
-  productId: string
-  userId: string
-}
+export type AdminType = BaseUserType & {
+  adminLevel: number;
+  subordinateUserIds: UUID[];
+};
+export type RegularUserType = BaseUserType;
 
-export type UserType = {
-  id: string
-  name: string
-  email: string
-  bio: string
-  location: string
-  website: string
-  registeredAt: string
-}
-
-export type FavoriteType = {
-  userId: string
-  productId: string
-}
-
-export type FollowType = {
-  id: string 
-  userId: string
-  followingId: string
-}
+type UserRole = "ADMIN" | "USER";
 
 export type argType = {
-  [key: string]: any
-}
+  [key: string]: any;
+};

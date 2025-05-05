@@ -1,6 +1,1 @@
-export { categories } from "./data/categories.ts"
-export { products } from "./data/products.ts"
-export { reviews } from "./data/reviews.ts"
 export { users } from "./data/users.ts"
-export { favorites } from "./data/favorites.ts"
-export { follows } from "./data/follows.ts"
