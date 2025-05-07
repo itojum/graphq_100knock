@@ -145,3 +145,61 @@ type Query {
 - Union型に対するクエリでは必ずインラインフラグメントを使用する必要があります
 - Union型では共通フィールドに直接アクセスすることはできません
 - `__typename` フィールドを使って型を判別できます
+
+## 54本目：Interfaceを使った共通フィールドの扱い
+
+### お題
+
+複数の型に共通するフィールドをInterfaceで定義し、Interface型を返すクエリを実装してください。
+
+### 前提条件
+
+以下の型が定義されていること：
+
+```graphql
+interface Node {
+  nodeId: ID!
+  createdAt: String!
+  author: User!
+}
+
+type Post implements Node {
+  nodeId: ID!
+  createdAt: String!
+  title: String!
+  content: String
+  comments: [Comment!]!
+}
+
+type Comment implements Node {
+  nodeId: ID!
+  createdAt: String!
+  text: String!
+  post: Post!
+}
+
+type Query {
+  nodes: [Node!]!
+}
+```
+```
+
+### 要件
+
+1. Nodeの共通フィールド（nodeId, createdAt, author）をまとめたFragmentを定義すること
+2. インラインフラグメント（... on Post / ... on
+   Comment）を使用して、型に応じたフィールド（Post: title, content / Comment:
+   text）を取得すること
+3. 単一のクエリでPostとCommentの両方の情報を適切に取得できること
+
+### 期待される結果
+
+- Node共通のフィールドは常に取得される
+- Post型の場合はtitle, contentも取得される
+- Comment型の場合はtextも取得される
+
+### ヒント
+
+- Interfaceに対してFragmentを定義することができます
+- inline fragmentは型による分岐に使用します（... on Type）
+- `__typename` フィールドで結果の型を判別できます

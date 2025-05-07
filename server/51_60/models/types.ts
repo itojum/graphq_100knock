@@ -24,6 +24,23 @@ export type ProductType = {
 
 export type SearchResultType = ProductType | BaseUserType;
 
+export type NodeType = {
+  nodeId: UUID;
+  createdAt: Date;
+  authorId: UUID;
+}
+
+export type PostType = NodeType & {
+  title: string;
+  content: string;
+}
+
+export type CommentType = NodeType & {
+  text: string;
+  postId: UUID;
+};
+
+
 export type argType = {
   [key: string]: any;
 };

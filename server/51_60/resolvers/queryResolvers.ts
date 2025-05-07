@@ -2,6 +2,8 @@ import { GraphQLResolveInfo } from "graphql";
 import { users } from "../models/data.ts";
 import { argType } from "../models/types.ts";
 import { products } from "../models/data/products.ts";
+import { posts } from "../models/data/posts.ts";
+import { comments } from "../models/data/comments.ts";
 
 export const Query = {
   /**
@@ -63,5 +65,32 @@ export const Query = {
       ...filteredProducts,
       ...filteredUsers,
     ];
+  },
+
+  /**
+   * 投稿とコメントを取得する
+   * @param _parent 親の引数
+   * @param _args 引数
+   * @param _context コンテキスト
+   * @param info GraphQLの情報
+   * @returns 投稿とコメントの配列
+   * */
+  nodes: (_parent: any, _args: any, _context: any, info: GraphQLResolveInfo) => {
+    // クエリのフラグメントを解析
+    const fragments = info.fieldNodes[0].selectionSet?.selections
+      .filter((selection) => selection.kind === 'InlineFragment')
+      .map((fragment: any) => fragment.typeCondition.name.value);
+
+      const nodes = [...posts, ...comments];
+
+      if (fragments) {
+        return nodes.filter(node => {
+          if (fragments.includes('Post')) return true;
+          if (fragments.includes('Comment')) return true;
+          return false;
+        })
+      }
+
+      return nodes;
   }
 };

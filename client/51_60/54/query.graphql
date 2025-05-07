@@ -1,0 +1,21 @@
+fragment NodeFields on Node {
+  nodeId
+  createdAt
+  author {
+    name
+  }
+}
+
+query ExampleQuery {
+  nodes {
+    ... on Post {
+        ...NodeFields
+        title
+        content
+    }
+    ... on Comment {
+        ...NodeFields
+        text
+    }
+  }
+}

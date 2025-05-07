@@ -36,9 +36,33 @@ export const typeDefs = `#graphql
 
   union SearchResult = Product | Admin | RegularUser
 
+  interface Node {
+    nodeId: ID!
+    createdAt: String!
+    author: BaseUser!
+  }
+
+  type Post implements Node {
+    nodeId: ID!
+    createdAt: String!
+    title: String!
+    content: String
+    author: BaseUser!
+    comments: [Comment!]!
+  }
+
+  type Comment implements Node {
+    nodeId: ID!
+    createdAt: String!
+    text: String!
+    author: BaseUser!
+    post: Post!
+  }
+
   type Query {
     users: [BaseUser!]!
     user(userId: ID!): BaseUser
     search(query: String!): [SearchResult!]!
+    nodes: [Node!]!
   }
 `;
