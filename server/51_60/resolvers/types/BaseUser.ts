@@ -1,4 +1,3 @@
-import { users } from "../../models/data.ts";
 import { BaseUserType } from "../../models/types.ts";
 
 export const BaseUser = {
@@ -7,17 +6,5 @@ export const BaseUser = {
       return "Admin";
     }
     return "RegularUser";
-  },
-
-  followers(user: BaseUserType) {
-    return users.filter((follower) => {
-      return follower.followingUserIds.includes(user.userId);
-    })
-  },
-
-  followerCount(user: BaseUserType) {
-    return users.filter((follower) => {
-      return follower.followingUserIds.includes(user.userId);
-    }).length;
   }
 }

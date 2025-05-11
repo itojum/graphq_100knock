@@ -233,3 +233,55 @@ type Query {
 
 - Fragmentは特定の型に対して定義されること
 - スプレッド構文（...）を使ってFragmentを展開すること
+
+## 56本目：複数の型を組み合わせたクエリの実装
+
+### お題
+
+ユーザーとその投稿、さらに投稿に対するコメントを一度に取得するクエリを実装してください。これにより、ユーザーの詳細情報とその関連データを効率的に取得できるようにします。
+
+### 前提条件
+
+- 以下の型が定義されていること：
+
+```graphql
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  posts: [Post!]!
+}
+
+type Post {
+  id: ID!
+  title: String!
+  content: String!
+  comments: [Comment!]!
+}
+
+type Comment {
+  id: ID!
+  text: String!
+  author: User!
+}
+
+type Query {
+  user(id: ID!): User
+}
+```
+
+### 要件
+
+1. ユーザーの基本情報（id, name, email）を取得するクエリを作成すること。
+2. ユーザーの投稿情報（title, content）をネストして取得すること。
+3. 各投稿に対するコメント情報（text, author）をさらにネストして取得すること。
+
+### 期待される結果
+
+- ユーザーの基本情報とその投稿、コメントが一度に取得される
+- データのネスト構造が正しく反映される
+
+### ヒント
+
+- ネストされたクエリを使用して、関連データを効率的に取得すること
+- Fragmentを活用してクエリの再利用性を高めること

@@ -1,0 +1,21 @@
+fragment UserFields on BaseUser {
+  userId
+  name
+  email
+}
+
+query ExampleQuery($userId: ID!) {
+  user(userId: $userId) {
+    ...UserFields
+    posts {
+      title
+      content
+      comments {
+        text
+        author {
+          ...UserFields
+        }
+      }
+    }
+  }
+}

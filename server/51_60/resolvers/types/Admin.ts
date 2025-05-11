@@ -1,4 +1,5 @@
 import { users } from "../../models/data.ts";
+import { posts } from "../../models/data/posts.ts";
 import { AdminType } from '../../models/types.ts';
 
 export const Admin = {
@@ -34,5 +35,16 @@ export const Admin = {
     return users.filter((follower) => {
       return follower.followingUserIds.includes(user.userId);
     }).length;
+  },
+
+  /**
+   * ユーザーの投稿を取得する
+   * @param user ユーザー
+   * @returns ユーザーの投稿
+   * */
+  posts(user: AdminType) {
+    return posts.filter((post) => {
+      return post.authorId === user.userId;
+    })
   }
 }

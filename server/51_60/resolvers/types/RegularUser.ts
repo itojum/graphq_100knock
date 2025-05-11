@@ -1,5 +1,6 @@
 import { RegularUserType } from "../../models/types.ts";
 import { users } from "../../models/data/users.ts";
+import { posts } from "../../models/data/posts.ts";
 
 export const RegularUser = {
   /**
@@ -22,5 +23,16 @@ export const RegularUser = {
     return users.filter((follower) => {
       return follower.followingUserIds.includes(user.userId);
     }).length;
+  },
+
+  /**
+   * ユーザーの投稿を取得する
+   * @param user ユーザー
+   * @returns ユーザーの投稿
+   * */
+  posts(user: RegularUserType) {
+    return posts.filter((post) => {
+      return post.authorId === user.userId;
+    })
   }
 }
