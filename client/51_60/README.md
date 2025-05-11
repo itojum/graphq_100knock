@@ -67,8 +67,8 @@ User型をAdmin型とRegularUser型に分けた際に、型に応じて異なる
   }
 
   enum UserRole {
-    ADMIN
-    USER
+    ADMIN    # システム全体の管理権限を持つ管理者
+    USER     # 一般ユーザー
   }
 
   type Query {
@@ -285,3 +285,110 @@ type Query {
 
 - ネストされたクエリを使用して、関連データを効率的に取得すること
 - Fragmentを活用してクエリの再利用性を高めること
+
+## 57本目：InterfaceとFragmentを使ったカテゴリ別商品情報の取得
+
+### お題
+
+カテゴリごとに異なる追加プロパティを持つ商品情報を、InterfaceとFragmentを使って効率的に取得するクエリを実装してください。
+
+### 前提条件
+
+以下の型が定義されていること：
+
+```graphql
+interface Product {
+  productId: ID!
+  name: String!
+  price: Float!
+  description: String
+  category: Category!
+}
+
+type Book implements Product {
+  productId: ID!
+  name: String!
+  price: Float!
+  description: String
+  category: Category!
+  author: String!
+  isbn: String!
+  pageCount: Int!
+  publisher: String!
+}
+
+type Clothing implements Product {
+  productId: ID!
+  name: String!
+  price: Float!
+  description: String
+  category: Category!
+  size: String!
+  color: String!
+  material: String!
+  gender: String!
+}
+
+type Electronic implements Product {
+  productId: ID!
+  name: String!
+  price: Float!
+  description: String
+  category: Category!
+  brand: String!
+  model: String!
+  warranty: Int!
+  specifications: [String!]!
+}
+
+type Category {
+  categoryId: ID!
+  name: String!
+  type: CategoryType!
+}
+
+enum CategoryType {
+  BOOK
+  CLOTHING
+  ELECTRONIC
+}
+
+type Query {
+  product(id: ID!): Product
+  products(categoryType: CategoryType): [Product!]!
+}
+```
+
+### 要件
+
+1. 商品の基本情報（id, name, price, description）を取得するFragmentを定義すること
+2. カテゴリごとの追加情報を取得するFragmentを定義すること
+   - 書籍情報用のFragment
+   - 衣類情報用のFragment
+   - 電化製品情報用のFragment
+3. InterfaceとFragmentを組み合わせて、型安全なクエリを実装すること
+
+### 実装のポイント
+
+1. **Fragmentの定義**
+   - Product Interfaceの基本情報用のFragment
+   - 各実装型（Book, Clothing, Electronic）固有の情報用のFragment
+
+2. **クエリの実装**
+   - `product(id)`クエリで、InterfaceとFragmentを組み合わせて使用
+   - `products`クエリで、指定されたカテゴリの商品一覧を取得
+   - インラインフラグメント（... on Type）を使用して型に応じた情報を取得
+
+### 期待される結果
+
+- 基本情報は常に取得される
+- カテゴリに応じて、適切な追加情報が取得される
+  * 書籍の場合：Book型の追加情報
+  * 衣類の場合：Clothing型の追加情報
+  * 電化製品の場合：Electronic型の追加情報
+
+### ヒント
+
+- Interfaceに対してFragmentを定義することができます
+- インラインフラグメント（... on Type）で型に応じた情報を取得します
+- スプレッド構文（...）を使ってFragmentを展開すること

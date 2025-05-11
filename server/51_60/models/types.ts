@@ -21,7 +21,39 @@ export type ProductType = {
   name: string;
   description: string;
   price: number;
+  categoryId: UUID;
 };
+
+export type BookType = ProductType & {
+  author: string;
+  isbn: string;
+  pageCount: number;
+  publisher: string;
+};
+
+export type ClothingType = ProductType & {
+  size: string;
+  color: string;
+  material: string;
+  gender: string;
+};
+
+export type ElectronicType = ProductType & {
+  brand: string;
+  model: string;
+  warranty: number;
+  specifications: string[];
+};
+
+export type CategoryType = {
+  categoryId: UUID;
+  name: string;
+  type: CategoryTypeEnum;
+};
+
+export type CategoryTypeEnum = "BOOK" | "CLOTHING" | "ELECTRONIC";
+
+
 
 export type SearchResultType = ProductType | BaseUserType;
 

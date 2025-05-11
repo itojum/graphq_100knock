@@ -6,7 +6,7 @@ import { RegularUser } from "./types/RegularUser.ts";
 import { SearchResult } from "./types/SearchResult.ts";
 import { Post } from "./types/Post.ts";
 import { Node } from "./types/Node.ts";
-
+import { Book, Clothing, Electronic, Product } from "./types/Product.ts";
 
 export const resolvers = {
   Query,
@@ -17,5 +17,9 @@ export const resolvers = {
   Comment,
   Post,
   SearchResult,
-
+  
+  Product,
+  Book,
+  Clothing,
+  Electronic,
 };

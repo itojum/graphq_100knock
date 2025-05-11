@@ -1,0 +1,51 @@
+fragment ProductFields on Product {
+  productId
+  name
+  price
+  description
+  category {
+    name
+  }
+}
+
+fragment BookFields on Book {
+  ...ProductFields
+  author
+  isbn
+  pageCount
+  publisher
+}
+
+fragment ClothingFields on Clothing {
+  ...ProductFields
+  size
+  color
+  material
+  gender
+}
+
+fragment ElectronicFields on Electronic {
+  ...ProductFields
+  brand
+  model
+  warranty
+  specifications
+}
+
+query ExampleQuery {
+  books: products {
+    ... on Book {
+      ...BookFields
+    }
+  }
+  clothing: products {
+    ... on Clothing {
+      ...ClothingFields
+    }
+  }
+  electronics: products {
+    ... on Electronic {
+      ...ElectronicFields
+    }
+  }
+}

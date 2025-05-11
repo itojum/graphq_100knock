@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from "graphql";
-import { users } from "../models/data.ts";
+import { categories, users } from "../models/data.ts";
 import { argType } from "../models/types.ts";
 import { products } from "../models/data/products.ts";
 import { posts } from "../models/data/posts.ts";
@@ -92,5 +92,43 @@ export const Query = {
       }
 
       return nodes;
-  }
+  },
+
+  /**
+   * 商品を取得する
+   * @param _parent 親の引数
+   * @param _args 引数
+   * @param _context コンテキスト
+   * @param info GraphQLの情報
+   * @returns 商品
+   * */
+  products: (_parent: any, _args: any, _context: any, info: GraphQLResolveInfo) => {
+    const fragments = info.fieldNodes[0].selectionSet?.selections
+      .filter((selection) => selection.kind === 'InlineFragment')
+      .map((fragment: any) => fragment.typeCondition.name.value);
+
+    if (fragments) {
+      const filteredProducts = products.filter(product => {
+        const category = categories.find((c) => c.categoryId === product.categoryId);
+
+        if (fragments.includes('Book') && category?.type === "BOOK") return true;
+        if (fragments.includes('Clothing') && category?.type === "CLOTHING") return true;
+        if (fragments.includes('Electronic') && category?.type === "ELECTRONIC") return true;
+      });
+      
+      return filteredProducts;
+    }
+
+    return products;
+  },
+
+  /**
+   * 商品をIDで取得する
+   * @param _parent 親の引数
+   * @param arg.id 商品ID
+   * @returns 商品
+   * */
+  product: (_parent: any, arg: argType) => {
+    return products.find(product => product.productId === arg.productId);
+  },
 };

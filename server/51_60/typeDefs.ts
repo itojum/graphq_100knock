@@ -36,14 +36,63 @@ export const typeDefs = `#graphql
     USER
   }
 
-  type Product {
+  interface Product {
     productId: ID!
     name: String!
-    description: String
     price: Float!
+    description: String
+    category: Category!
   }
 
-  union SearchResult = Product | Admin | RegularUser
+  type Book implements Product {
+    productId: ID!
+    name: String!
+    price: Float!
+    description: String
+    category: Category!
+    author: String!
+    isbn: String!
+    pageCount: Int!
+    publisher: String!
+  }
+
+  type Clothing implements Product {
+    productId: ID!
+    name: String!
+    price: Float!
+    description: String
+    category: Category!
+    size: String!
+    color: String!
+    material: String!
+    gender: String!
+  }
+
+  type Electronic implements Product {
+    productId: ID!
+    name: String!
+    price: Float!
+    description: String
+    category: Category!
+    brand: String!
+    model: String!
+    warranty: Int!
+    specifications: [String!]!
+  }
+
+  type Category {
+    categoryId: ID!
+    name: String!
+    type: CategoryType!
+  }
+
+  enum CategoryType {
+    BOOK
+    CLOTHING
+    ELECTRONIC
+  }
+
+  union SearchResult = Book | Clothing | Electronic | Admin | RegularUser
 
   interface Node {
     nodeId: ID!
@@ -71,6 +120,8 @@ export const typeDefs = `#graphql
   type Query {
     users: [BaseUser!]!
     user(userId: ID!): BaseUser
+    products: [Product!]!
+    product(productId: ID!): Product
     search(query: String!): [SearchResult!]!
     nodes: [Node!]!
   }
