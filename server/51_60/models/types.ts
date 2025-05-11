@@ -5,6 +5,7 @@ export type BaseUserType = {
   name: string;
   email: string;
   role: UserRole;
+  followingUserIds: UUID[];
 };
 
 export type AdminType = BaseUserType & {

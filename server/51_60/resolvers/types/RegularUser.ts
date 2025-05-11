@@ -1,25 +1,13 @@
-import { users } from "../../models/data.ts";
-import { AdminType } from '../../models/types.ts';
+import { RegularUserType } from "../../models/types.ts";
+import { users } from "../../models/data/users.ts";
 
-export const Admin = {
-  /**
-   * ユーザーの部下を取得する
-   * @param user ユーザー
-   * @returns ユーザーの部下
-   * */
-  subordinateUsers: (user: AdminType) => {
-    const subordinateUserIds = user.subordinateUserIds;
-    return users.filter((subordinateUser) =>
-      subordinateUserIds.includes(subordinateUser.userId)
-    );
-  },
-
+export const RegularUser = {
   /**
    * ユーザーのフォロワーを取得する
    * @param user ユーザー
    * @returns ユーザーのフォロワー
    * */
-  followers(user: AdminType) {
+  followers(user: RegularUserType) {
     return users.filter((follower) => {
       return follower.followingUserIds.includes(user.userId);
     })
@@ -30,7 +18,7 @@ export const Admin = {
    * @param user ユーザー
    * @returns ユーザーのフォロワー数
    * */
-  followerCount(user: AdminType) {
+  followerCount(user: RegularUserType) {
     return users.filter((follower) => {
       return follower.followingUserIds.includes(user.userId);
     }).length;

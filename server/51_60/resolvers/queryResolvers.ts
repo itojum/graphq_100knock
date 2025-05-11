@@ -35,7 +35,7 @@ export const Query = {
    * @returns ユーザー
   */
   user: (_parent: any, arg: argType) => {
-    return users.find(user => user.userId === arg.id);
+    return users.find(user => user.userId === arg.userId);
   },
 
 

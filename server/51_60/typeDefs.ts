@@ -4,6 +4,8 @@ export const typeDefs = `#graphql
     name: String!
     email: String!
     role: UserRole!
+    followerCount: Int!
+    followers: [BaseUser!]
   }
 
   type Admin implements BaseUser {
@@ -13,6 +15,8 @@ export const typeDefs = `#graphql
     role: UserRole!
     adminLevel: Int!
     subordinateUsers: [BaseUser!]!
+    followerCount: Int!
+    followers: [BaseUser!]
   }
 
   type RegularUser implements BaseUser {
@@ -20,6 +24,8 @@ export const typeDefs = `#graphql
     name: String!
     email: String!
     role: UserRole!
+    followerCount: Int!
+    followers: [BaseUser!]
   }
 
   enum UserRole {
